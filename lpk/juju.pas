@@ -2,7 +2,7 @@
   This source is only used to compile and install the package.
  }
 
-unit shut;
+unit juju;
 
 {$warn 5023 off : no warning about unused units}
 interface
@@ -17,5 +17,5 @@ begin
 end;
 
 initialization
-  RegisterPackage('shut', @Register);
+  RegisterPackage('juju', @Register);
 end.

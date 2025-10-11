@@ -6,11 +6,10 @@ interface
 
 uses
   Classes, SysUtils,
-  // Shut:
+  // Juju:
   typutil;
 
   procedure scan_fold_paths_in_top_dir(const path:      str; sl: TStrings);
-  procedure scan_file_paths_in_subdirs(const path, msk: str; sl: TStrings);
 implementation
 
 procedure scan_fold_paths_in_top_dir(const path: str; sl: TStrings);
@@ -29,11 +28,6 @@ begin
   until FindNext(rec) <> 0;
     FindClose(rec);
   end;
-end;
-
-procedure scan_file_paths_in_subdirs(const path, msk: str; sl: TStrings);
-begin
-
 end;
 
 end.
