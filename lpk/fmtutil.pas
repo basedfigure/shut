@@ -5,14 +5,18 @@ unit fmtutil;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, StrUtils,
   // Juju:
   typutil;
 
-  procedure scan_fold_paths_in_top_dir(const path:      str; sl: TStrings);
+
+  { Proc }
+  procedure scan_fold_paths_fr_top_dir (const path: str; sl: TStrings);
+  { Func }
+  function combine_paths (const base, v: str):  str;
 implementation
 
-procedure scan_fold_paths_in_top_dir(const path: str; sl: TStrings);
+procedure scan_fold_paths_fr_top_dir (const path: str; sl: TStrings);
 var
   rec: TSearchRec;
   expr: str;
@@ -28,6 +32,15 @@ begin
   until FindNext(rec) <> 0;
     FindClose(rec);
   end;
+end;
+
+function combine_paths (const base, v: str):  str;
+begin
+  if (v = '') then  result:=''
+  else if (v[1] = '/') then
+    result:=IncludeTrailingPathDelimiter (base) + Copy (v, 2, MaxInt)
+  else
+    result:= '/' + v;
 end;
 
 end.

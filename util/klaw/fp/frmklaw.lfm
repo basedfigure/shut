@@ -1,0 +1,40 @@
+object KlawFrm: TKlawFrm
+  Left = 436
+  Height = 186
+  Top = 142
+  Width = 201
+  Caption = 'Klaw script wizard'
+  ClientHeight = 186
+  ClientWidth = 201
+  Menu = main_menu
+  LCLVersion = '4.99.0.0'
+  OnCreate = FormCreate
+  object lbl_project_path: TLabel
+    Left = 0
+    Height = 14
+    Top = 0
+    Width = 201
+    Align = alTop
+    Caption = 'Project path:'
+  end
+  object cb_project_path: TComboBox
+    Left = 0
+    Height = 25
+    Top = 14
+    Width = 201
+    Align = alTop
+    ItemHeight = 0
+    TabOrder = 0
+  end
+  object main_menu: TMainMenu
+    Left = 48
+    Top = 72
+    object mi_tools: TMenuItem
+      Caption = 'Tools'
+      object mi_git_kompare_script_project: TMenuItem
+        Caption = 'Git Kompare script project'
+        OnClick = mi_git_kompare_script_project_click
+      end
+    end
+  end
+end
