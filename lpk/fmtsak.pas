@@ -17,14 +17,16 @@ type
   { sak_t - structured array of knowledge, format }
 
   sak_t = object
+    id: str;
     f: TStringList;
+    inp_fields:  array of str;
 
     constructor init;
     destructor  kill;
     { Proc }
-    procedure save_to_disk  (const path: str);
+    procedure save_to_disk (const path: str);
     { Func }
-    function load_fr_disk (const path: str):  bool;
+    function  load_fr_disk (const path: str):  bool;
   end;
 
 implementation
@@ -93,6 +95,9 @@ begin
         k:=Trim (Copy (l, 1, cur - 1));
         v:=Trim (Copy (l, cur + 1,  Length (l)));
         f.Values [LowerCase (k)]:=combine_paths (base, v);
+
+        de_print_blk (v, 'PROJECT');
+
       end;
     end;
 

@@ -18,6 +18,10 @@
         <Filename Value="typutil.pas"/>
         <UnitName Value="typutil"/>
       </Item>
+      <Item>
+        <Filename Value="fmtsak.pas"/>
+        <UnitName Value="fmtsak"/>
+      </Item>
     </Files>
     <RequiredPkgs>
       <Item>

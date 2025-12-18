@@ -14,6 +14,7 @@ uses
   procedure scan_fold_paths_fr_top_dir (const path: str; sl: TStrings);
   { Func }
   function combine_paths (const base, v: str):  str;
+  function rip_file_or_fold_name (const path:    str):  str;
 implementation
 
 procedure scan_fold_paths_fr_top_dir (const path: str; sl: TStrings);
@@ -41,6 +42,11 @@ begin
     result:=IncludeTrailingPathDelimiter (base) + Copy (v, 2, MaxInt)
   else
     result:= '/' + v;
+end;
+
+function rip_file_or_fold_name (const path: str): str;
+begin
+  result:=ExtractFileName (ExcludeTrailingPathDelimiter (path));
 end;
 
 end.

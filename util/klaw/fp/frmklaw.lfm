@@ -1,39 +1,113 @@
 object KlawFrm: TKlawFrm
-  Left = 436
-  Height = 186
-  Top = 142
-  Width = 201
+  Left = 409
+  Height = 282
+  Top = 267
+  Width = 407
   Caption = 'Klaw script wizard'
-  ClientHeight = 186
-  ClientWidth = 201
+  ClientHeight = 282
+  ClientWidth = 407
   Menu = main_menu
   LCLVersion = '4.99.0.0'
   OnCreate = FormCreate
-  object lbl_project_path: TLabel
+  object side_l_panl: TPanel
     Left = 0
-    Height = 14
-    Top = 0
-    Width = 201
-    Align = alTop
-    Caption = 'Project path:'
+    Height = 243
+    Top = 39
+    Width = 146
+    Align = alLeft
+    ClientHeight = 243
+    ClientWidth = 146
+    TabOrder = 0
+    object edt_project_title: TEdit
+      Left = 1
+      Height = 22
+      Top = 1
+      Width = 144
+      Align = alTop
+      ReadOnly = True
+      TabOrder = 0
+      TextHint = 'Title'
+    end
   end
   object cb_project_path: TComboBox
     Left = 0
     Height = 25
     Top = 14
-    Width = 201
+    Width = 407
     Align = alTop
     ItemHeight = 0
-    TabOrder = 0
+    TabOrder = 1
+    OnChange = cb_project_path_change
+  end
+  object lbl_project_path: TLabel
+    Left = 0
+    Height = 14
+    Top = 0
+    Width = 407
+    Align = alTop
+    Caption = 'Project path:'
+  end
+  object split1: TSplitter
+    Left = 146
+    Height = 243
+    Top = 39
+    Width = 5
+  end
+  object side_r_pnl: TPanel
+    Left = 151
+    Height = 243
+    Top = 39
+    Width = 256
+    Align = alClient
+    ClientHeight = 243
+    ClientWidth = 256
+    TabOrder = 3
+    object vle_sak_input_field_editor: TValueListEditor
+      Left = 1
+      Height = 241
+      Top = 1
+      Width = 254
+      Align = alClient
+      RowCount = 2
+      TabOrder = 0
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goAlwaysShowEditor, goThumbTracking, goCellHints]
+      ColWidths = (
+        64
+        186
+      )
+    end
   end
   object main_menu: TMainMenu
     Left = 48
     Top = 72
     object mi_tools: TMenuItem
       Caption = 'Tools'
+      Default = True
       object mi_git_kompare_script_project: TMenuItem
         Caption = 'Git Kompare script project'
         OnClick = mi_git_kompare_script_project_click
+      end
+      object mi_git_cmd_templates: TMenuItem
+        Caption = 'Git command templates'
+        Enabled = False
+      end
+    end
+    object mi_config: TMenuItem
+      Caption = 'Config'
+      object mi_tog_console_on_launch: TMenuItem
+        Caption = 'Toggle console on launch'
+        Enabled = False
+        OnClick = mi_tog_console_on_launch_click
+      end
+      object mi_tog_path_editing: TMenuItem
+        AutoCheck = True
+        Caption = 'Toggle path editing (rope.sak)'
+        Checked = True
+        Enabled = False
+      end
+      object mi_silent_console_mode: TMenuItem
+        Caption = 'Silent console mode'
+        Enabled = False
       end
     end
   end
