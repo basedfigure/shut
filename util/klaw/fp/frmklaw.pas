@@ -113,7 +113,7 @@ begin
   try
     Proc.Executable:='/bin/bash';
     Proc.Parameters.Add (SH_PATH_R + 'git_kompare_diff.sh');
-     Proc.Parameters.Add (rope.f.ValueFromIndex[0]);
+     Proc.Parameters.Add (vle_sak_input_field_editor.Values ['Path']);
 
     Proc.Options:=[poWaitOnExit];
     Proc.Execute;
