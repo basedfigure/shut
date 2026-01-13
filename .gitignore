@@ -1,0 +1,12 @@
+lpk/lib/
+*.ico
+*.lps
+*.res
+util/klaw/laz/klaw
+util/klaw/laz/lib/
+
+util/term/term
+util/term/lib
+
+util/save/save
+util/save/lib
