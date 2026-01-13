@@ -7,17 +7,20 @@ uses
   cthreads,
   {$ENDIF}
   Classes,
+  crt,
+  // Juju:
   typutil, apputil;
 
 const
-  ENV_NAME  = 'Hex';
-  UTIL_PATH_R = '../';
   KLAW_PATH_B = UTIL_PATH_R + 'klaw/laz/';
 
 begin
-  de_print_blk ('Console program compile times are quick, oooh!', ENV_NAME);
-  if  ask_user_to_confirm ('Do you want launch:  Klaw ?') then
+  de_print_env (USER_NAME_D, TERM_NAME_D);
+  de_print_ln ('Console program compile times are quick, oooh!');
    // Ask for options and whether to configure a new user, remember 4 later typa
-   run_app (KLAW_PATH_B + 'klaw');
+
+   // Just write:  klaw, firefox ...
+   run_cli([@run_app, KLAW_PATH_B + 'klaw',
+            @run_app, '/mnt/dump_dsk/INST/firefox/firefox']);
 end.
 

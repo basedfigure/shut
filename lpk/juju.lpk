@@ -11,16 +11,20 @@
     </CompilerOptions>
     <Files>
       <Item>
+        <Filename Value="apputil.pas"/>
+        <UnitName Value="apputil"/>
+      </Item>
+      <Item>
+        <Filename Value="fmtsak.pas"/>
+        <UnitName Value="fmtsak"/>
+      </Item>
+      <Item>
         <Filename Value="fmtutil.pas"/>
         <UnitName Value="fmtutil"/>
       </Item>
       <Item>
         <Filename Value="typutil.pas"/>
         <UnitName Value="typutil"/>
-      </Item>
-      <Item>
-        <Filename Value="fmtsak.pas"/>
-        <UnitName Value="fmtsak"/>
       </Item>
     </Files>
     <RequiredPkgs>

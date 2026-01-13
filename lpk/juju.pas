@@ -8,7 +8,7 @@ unit juju;
 interface
 
 uses
-  fmtutil, typutil, fmtsak, LazarusPackageIntf;
+  apputil, fmtsak, fmtutil, typutil, LazarusPackageIntf;
 
 implementation
 

@@ -12,6 +12,7 @@ const
   IO_PATH_R = '../../../io/';
   SH_PATH_R   = '../../../sh/';
 
+
   // Consoles:
   {
   To change the console you want, hit the Run's arrow button, Run Parameters...
@@ -26,25 +27,37 @@ const
   ete your lib folder for that project and recompile
   }
 
+
 type
   // Type aliasing
   int  = integer;
   str  = string;
   bool = boolean;
 
-  function de_print_blk (s: str;  head: str = 'FILL ME'):  str;
+  procedure de_print_ln (s: str = '');
+  procedure de_print_blk (s: str;  head: str = 'FILL ME';  sym: str = ':');
+  procedure de_print_env (user, term: str);
 implementation
 
-function de_print_blk (s: str;  head: str = 'FILL ME'):  str;
-var
-  sym: str;
+procedure de_print_ln (s: str = '');
 begin
-  sym:=':';
-  Writeln('');
-  Writeln(head + sym);
-  Writeln(s);
+  Writeln (s);
 end;
 
+procedure de_print_blk (s: str;  head: str = 'FILL ME';  sym: str = ':');
+begin
+  Writeln ('');
+  Writeln (head + sym);
+  Writeln (s);
+end;
+
+procedure de_print_env (user, term: str);
+begin
+  Writeln ('');
+  Writeln ('User: ' + user);
+  Writeln ('Term: ' + term);
+  Writeln ('');
+end;
 
 end.
 
