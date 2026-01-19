@@ -37,7 +37,7 @@ RED="\033[31m"
 YELLOW="\033[33m"
 RESET="\033[0m"  # no color
 
-echo -e "\n Comparing:"
+echo -e "\n 🔍 Comparing:"
 echo "  $DIR1"
 echo "  $DIR2"
 echo
