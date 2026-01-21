@@ -1,0 +1,18 @@
+INST (sak):
+
+init:  chmod, sh, rc {
+
+Give chmod permissions to sh/:  chmod
+$ cd  sh/path
+$ sudo chmod +x  script.sh
+
+Export sh/ path & call script without (./):  sh
+$ sed -i '$a export PATH="$PATH:/mnt/dump_dsk/CENTR/WRK/juju/sh"' ~/.bashrc
+..
+restart console
+
+Source your bashrc or zshrc:  rc
+$ source ~/.bashrc
+..
+restart console
+}
