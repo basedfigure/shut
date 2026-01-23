@@ -1,0 +1,79 @@
+function! DelDupeURLsOnUserYNQ(tld)
+  if a:tld ==# ''
+    echo "Abort, no tld"
+    return
+  endif
+
+  let counts = {}
+
+  function! s:NormalizeExact(line)
+    let s = trim(a:line)
+    let s = substitute(s, '^\s*https\?:\/\/', '', '')
+    let s = substitute(s, '^\s*www\.', '', '')
+    return s
+  endfunction
+
+  for lnum in range(1, line('$'))
+    let line = getline(lnum)
+
+    if line !~ '\V' . a:tld
+      continue
+    endif
+
+    let norm = s:NormalizeExact(line)
+
+    if norm !~ '\V' . a:tld
+      continue
+    endif
+
+    let counts[norm] = get(counts, norm, 0) + 1
+  endfor
+
+  let seen = {}
+  let lnum = 1
+
+  while lnum <= line('$')
+    let line = getline(lnum)
+
+    if line !~ '\V' . a:tld
+      let lnum += 1
+      continue
+    endif
+
+    let norm = s:NormalizeExact(line)
+
+    if norm !~ '\V' . a:tld
+      let lnum += 1
+      continue
+    endif
+
+    if has_key(seen, norm)
+      let seen[norm] += 1
+      let idx = seen[norm]
+      let total = counts[norm]
+
+      let choice = input(
+         \ "\nDuplicate " . idx . "/" . total . "\n" .
+         \ "Exact match (ignoring http/https/www):\n" .
+         \ norm . "\n" .
+         \ "Line " . lnum . ":\n" .
+         \ line . "\nDelete? (y/n/q): "
+         \ )
+
+      if choice ==# 'q'
+        echo "Abort mission"
+        return
+      elseif choice ==# 'y'
+        execute lnum . 'delete'
+        continue
+      endif
+    else
+      let seen[norm] = 1
+    endif
+
+    let lnum += 1
+  endwhile
+
+  echo "Check for duplicates complete"
+endfunction
+
