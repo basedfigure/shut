@@ -1,6 +1,12 @@
 #!/bin/sh
 set -e
 
+INST="/mnt/dump_dsk/CENTR/WRK/juju/sh/inst"
+
+inst_juju_bark() {
+  "$INST/juju_bark.sh"
+}
+
 inst_vi_plugins() {
   # gvim
   sudo apt install vim-gtk3
@@ -21,11 +27,14 @@ bark_bark() {
 }
 
 usage() {
-  echo "Usage: $0 {vi|bark|all}"
+  echo "Usage: $0 {juju|vi|bark|all}"
 }
 
 
 case "$1" in
+  juju)
+    inst_juju_bark
+    ;;
   vi)
     inst_vi_plugins
     ;;
