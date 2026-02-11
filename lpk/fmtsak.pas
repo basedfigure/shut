@@ -27,7 +27,8 @@ type
     procedure save_to_disk (const path: str);
     { Func }
     function  load_fr_disk (const path: str):  bool;
-    function  scan_curly_blks (const s:  str):  TStringList;
+    function  scan_comment_lns (const s:  str):  TStringList;
+    function  scan_curly_blks (const s:  str):  TStringList; { + }
   end;
 
 implementation
@@ -110,10 +111,33 @@ begin
 
 end;
 
+function sak_t.scan_comment_lns (const s:  str):  TStringList;
+var
+  l:  TStringList;
+  i, on_pos: int;
+begin
+  result:=TStringList.Create;
+  l:=TStringList.Create;
+
+  try
+    l.Text:=s;
+
+    for i:=0 to l.Count-1 do begin
+      on_pos:=Pos ('//', l[i]);
+      if on_pos > 0 then
+        result.Add (Copy (l[i], on_pos, MaxInt));
+    end;
+
+  finally
+    l.Free;
+  end;
+
+end;
+
 function sak_t.scan_curly_blks (const s:  str):  TStringList;
 { perv%, i love all women }
 var
-  i, on_pos:  int;
+  i:  int;
   is_in:  bool;
   ass:  str;
 begin
