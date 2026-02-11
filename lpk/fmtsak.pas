@@ -27,6 +27,7 @@ type
     procedure save_to_disk (const path: str);
     { Func }
     function  load_fr_disk (const path: str):  bool;
+    function  scan_curly_blks (const s:  str):  TStringList;
   end;
 
 implementation
@@ -66,7 +67,7 @@ end;
 function sak_t.load_fr_disk (const path: str): bool;
 var
   rl: TStringList;
-  k, v, l, base: str; // Key, value pair on line.
+  k, v, l, base: str; // Key, value pair on line (k,v,l).
   i, cur: int;
 begin
 
@@ -109,6 +110,33 @@ begin
 
 end;
 
+function sak_t.scan_curly_blks (const s:  str):  TStringList;
+{ perv%, i love all women }
+var
+  i, on_pos:  int;
+  is_in:  bool;
+  ass:  str;
+begin
+  result:=TStringList.Create;
+  is_in:=false;
+  ass:='';
+
+  for i:=1 to Length (s) do begin
+    if s[i] = '{' then begin
+      is_in:=true;
+      ass:='';
+      Continue;
+    end;
+
+    if (s[i] = '}') and is_in then begin
+      result.add (ass);
+      is_in:=false;
+      Continue;
+    end;
+
+    if is_in then ass:=ass + s[i];
+  end;
+end;
 
 end.
 
