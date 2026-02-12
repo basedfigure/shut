@@ -5,8 +5,8 @@ lpk/lib/
 util/klaw/laz/klaw
 util/klaw/laz/lib/
 
-util/term/term
-util/term/lib
+util/hex/hexterm
+util/hex/lib
 
 util/save/save
 util/save/lib
