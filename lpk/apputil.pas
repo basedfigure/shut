@@ -7,36 +7,55 @@ interface
 uses
   Classes, SysUtils, process,
   // Juju:
-  typutil;
+  typutil, ncutil, ncurses;
 
 const
-  USER_NAME_D  = 'Shaman';
-  TERM_NAME_D  = 'Hex';
   UTIL_PATH_R = '../';
 
-  procedure run_cli (const args: array of const);
-  function ask_user_to_confirm (const q: str): bool;
-  procedure run_app (const path: str);
+  USER_NAME_DE  = 'Shaman';
+  TERM_NAME_DE  = 'Hex';
+
 
 type
-  proc_str_t = procedure (const arg: str);
+
+  { env_t }
+
+  env_t = record
+    user_id, term_id:  str;
+  end;
+
+  { Proc }
+  procedure run_cli (env: env_t;  const args: array of const);
+  procedure run_cli_nc (const args:  arg_a);
+  procedure run_app (const path: str);
+  { Func }
+  function ask_user_to_confirm (const q: str): bool;
 
 implementation
+
 
 function trunc_bin (const path: str): str;
 begin
   result:=LowerCase (ExtractFileName (path));
 end;
 
-procedure run_cli (const args: array of const);
+procedure run_cli (env: env_t;  const args: array of const);
 { du:  magic recipes, pool resources, tissues }
 var
-  cmd: str;
-  i: int;
+  cmd, user, term: str;
+  i,  nc_on_ln: int;
   found: bool;
 begin
+  user:=env.user_id;
+  term:=env.term_id;
+
+  nc_on_ln:=0;
+  //init_nc;
+
   while true do begin
-   Write (USER_NAME_D + '@' + TERM_NAME_D + '> ');
+   //draw_nc (nc_on_ln);
+
+   Write (user + '@' + term + '> ');
    ReadLn (cmd);
    cmd:=LowerCase (Trim (cmd));
 
@@ -58,15 +77,17 @@ begin
     if not found then WriteLn ('Unknown command.');
 
   end;
+
 end;
 
-function ask_user_to_confirm (const q: str): bool;
-var
-  a: str;
+procedure run_cli_nc (const args:  arg_a);
 begin
-  Write (q, ' [y/n]: ');
-  Readln (a);
-  result:=(LowerCase (a) = 'y');
+
+end;
+
+procedure arg_call (const dummy_arg:  str);
+begin
+  run_cli_nc (g_vars);
 end;
 
 procedure run_app (const path: str);
@@ -90,6 +111,15 @@ begin
    finally
      proc.Free;
    end;
+end;
+
+function ask_user_to_confirm (const q: str): bool;
+var
+  a: str;
+begin
+  Write (q, ' [y/n]: ');
+  Readln (a);
+  result:=(LowerCase (a) = 'y');
 end;
 
 end.
