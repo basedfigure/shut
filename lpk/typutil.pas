@@ -43,6 +43,12 @@ type
   // project, so there is less room for interpretation, when it comes to staying
   // under one official compiler, with a RAD IDE, that i can confidently say has
   // no equal:  Lazarus
+  //
+  // Auto completion:
+  // By using underscores you can utilize those by writing "mem_" or "_nc" and b
+  // y hitting ctrl-space, to see just your specific results,  instead of a long
+  // list of them, which would happen if you just wrote "mem" or "nc" instead, s
+  // o it tightens and delims the scope of your namespaces in length and symbols
 
   // Type aliasing
   int  = integer;
