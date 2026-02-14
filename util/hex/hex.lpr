@@ -16,7 +16,7 @@ const
 
   KLAW_PATH_B = UTIL_PATH_R + 'klaw/laz/';
 
-procedure bark_wai_fu (const heart:  str = '<3');
+procedure bark_wai_fu (const emoji:  str = '<3');
 { Wrap her in a gift box }
 begin
   draw_nc ('Unromance +6', g_vars, 0);
@@ -24,6 +24,7 @@ begin
   mvprintw (4, 1, 'scull size -13 in.');
   mvprintw (5, 1,
     'The basics are sometimes all you need to look good, in bitchcraft');
+  mvprintw (6, 1, PChar(emoji));
 end;
 
 begin
@@ -43,7 +44,7 @@ begin
    // Screens @ foot/:
    // codeberg.org/basedfigure/foot/src/branch/main/laz/hex
    init_nc;
-   bark_wai_fu;
+   bark_wai_fu (HEART_MOJ);
    getch;
    endwin;
 end.

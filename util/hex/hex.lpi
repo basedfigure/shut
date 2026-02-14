@@ -54,6 +54,12 @@
         <DebugInfoType Value="dsDwarf3"/>
       </Debugging>
     </Linking>
+    <Other>
+      <CustomOptions Value="-dTWO_CHAR_EMOJI"/>
+      <OtherDefines Count="1">
+        <Define0 Value="TWO_CHAR_EMOJI"/>
+      </OtherDefines>
+    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions>

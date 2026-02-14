@@ -1,6 +1,8 @@
 unit typutil;
 
 {$mode ObjFPC}{$H+}
+{$DEFINE TWO_CHAR_EMOJI} // fpc -dTWO_CHAR_EMOJI
+// Guideposts @ foot/laz/menu/
 
 interface
 
@@ -13,7 +15,7 @@ const
   SH_PATH_R   = '../../../sh/';
 
 type
-  // Style guide (e.g):
+  // * Style guide (e.g):
   // Abbreviate block to blk, when you don't mean a memory block (mem), but to m
   // ean something more disambiguous without context, like a comment block (str)
   //
@@ -49,6 +51,45 @@ type
   // y hitting ctrl-space, to see just your specific results,  instead of a long
   // list of them, which would happen if you just wrote "mem" or "nc" instead, s
   // o it tightens and delims the scope of your namespaces in length and symbols
+  //
+  // * Dojo:
+  // More on Pascal, C binding, porting and other stuff included in Dojo (url):
+  // codeberg.org/basedfigure/dojo
+  //
+  // I want to make it a programmer's retreat,  that has all the tricks right at
+  // your fingertips and a place to spin up any concept into life, for anyone fr
+  // om beginners to vets, so i'll always have that one happy place to write to
+  // and from. All my projects are living projects and i've done a lot of shit i
+  // n my life, which i'm not going to info dump or share as is, without distill
+  // ing it into its essence. I'm a philosophical writer & programmer, not a pro
+  // duction programmer, so it may not be the kind of library you might be looki
+  // ng for, hihi. As for any retrocoding stuff, i won't do it purely out of nov
+  // elty, but to keep the practice & skillset alive in general, without sinistr
+  // ality.
+  //
+  // Note that i'm fairly anti-competetive,  but i still keep things close to my
+  // chest, should i want to or need to, but everything i work on has a rhyme or
+  // reason, as is human nature, but i'm also the god of my own universe. So, Do
+  // jo's essence is dualistic in nature on the how and why of building universe
+  // s. I don't do any one thing just because i want to do it better or differen
+  // tly, from someone else, because many of those "someone else's" don't even e
+  // xist, in what i do.
+  //
+  // As the villainous Irenicus would put it in the opening scene of Baldur's Ga
+  // te 2:  "You have much untapped power.", as he tortures your character, with
+  // his spells, which i first heard when i beat the game as a kid, and later on
+  // found out that said line captures the essence of everyone's coexistence ver
+  // y well, in the equation of what we call:  Life.
+  //
+  // Do your own things.
+  //
+  // * Git commit message style guide:  wip
+  // 1) Routine, description
+  // or..
+  // 2) resync with muh batches
+  //
+  // Ffortless
+
 
   // Type aliasing
   int  = integer;
@@ -76,12 +117,31 @@ type
 
   arg_a = array of arg_t;
 
+  { env_t }
+
+  env_t = record
+    user_id, term_id:  str;
+  end;
+
+const
+  // ASCII emojis:  en.wikipedia.org/wiki/List_of_emoticons
+  {$IFDEF TWO_CHAR_EMOJI}
+    SMILE_MOJ = ':)';
+    SMILE2_MOJ = ':]';
+    FROWN_MOJ = ':(';
+  {$ELSE}
+    SMILE_MOJ = ':-)';
+    SMILE2_MOJ = ':-]';
+    FROWN_MOJ = ':-(';
+  {$ENDIF}
+    HEART_MOJ = '<3';
 
 var
   // Global variables
   pa:  poi_a;
   // ..arrays
-  g_vars:  arg_a;
+  g_vars:  arg_a; // = (
+    //(proc: @cmd_exec;  id: 'exec';  group:  g_exec);
 
   { (poi)nter }
 
@@ -89,7 +149,7 @@ var
   { (de)bug }
   procedure de_print_ln (s: str = '');
   procedure de_print_blk (s: str;  head: str = 'FILL UP';  sym: str = ':');
-  procedure de_print_env (user, term: str);
+  procedure de_print_env (e:  env_t);
 implementation
 
 
@@ -111,11 +171,11 @@ begin
   Writeln (s);
 end;
 
-procedure de_print_env (user, term: str);
+procedure de_print_env (e:  env_t);
 begin
   Writeln ('');
-  Writeln ('User: ' + user);
-  Writeln ('Term: ' + term);
+  Writeln ('User: ' + e.user_id);
+  Writeln ('Term: ' + e.term_id);
   Writeln ('');
 end;
 
