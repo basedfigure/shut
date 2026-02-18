@@ -15,16 +15,22 @@ uses
 const
 
   KLAW_PATH_B = UTIL_PATH_R + 'klaw/laz/';
+var
+  arg: arg_t;
+  a: arg_a;
 
 procedure bark_wai_fu (const emoji:  str = '<3');
 { Wrap her in a gift box }
 begin
+  args_init (g_vars);
+  g_vars[0].id:='Unromance +6';
+
   draw_nc ('Unromance +6', g_vars, 0);
-  mvprintw (3, 1, 'ncurses is my bitch');
-  mvprintw (4, 1, 'scull size -13 in.');
-  mvprintw (5, 1,
-    'The basics are sometimes all you need to look good, in bitchcraft');
-  mvprintw (6, 1, PChar(emoji));
+  //mvprintw (3, 1, 'ncurses is my bitch');
+  //mvprintw (4, 1, 'scull size -13 in.');
+  //mvprintw (5, 1,
+  //  'The basics are sometimes all you need to look good, in bitchcraft <3');
+  //mvprintw (6, 1, PChar(emoji));
 end;
 
 begin
