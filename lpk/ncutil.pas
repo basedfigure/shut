@@ -31,8 +31,7 @@ var
 begin
   clear;
   //mvprintw (0, 2, 'Move:  j/k,  Select:  enter');
-  //
-  //
+
   for i:=0 to High (larg) do begin
     if i = on_ln then attron (A_REVERSE);
 
@@ -52,8 +51,6 @@ begin
     mvprintw (0, 1, 'WIDE RIBBON');
 
   attroff (A_REVERSE);
-
-
 
   refresh;
 end;

@@ -16,20 +16,17 @@ const
   TERM_NAME_DE  = 'Hex';
 
 
-type
-
-  { env_t }
-
-  env_t = record
-    user_id, term_id:  str;
-  end;
 
   { Proc }
-  procedure run_cli (env: env_t;  const args: array of const);
+  procedure run_cli (e: env_t;  const args: array of const);
   procedure run_cli_nc (const args:  arg_a);
-  procedure run_app (const path: str);
+  procedure exec_app (const path: str);
   { Func }
   function ask_user_to_confirm (const q: str): bool;
+
+var
+  // Global variables
+  g_env:  env_t;
 
 implementation
 
@@ -39,40 +36,50 @@ begin
   result:=LowerCase (ExtractFileName (path));
 end;
 
-procedure run_cli (env: env_t;  const args: array of const);
+procedure run_cli (e: env_t;  const args: array of const);
 { du:  magic recipes, pool resources, tissues }
 var
   cmd, user, term: str;
   i,  nc_on_ln: int;
   found: bool;
+  ch:  smallint;
 begin
-  user:=env.user_id;
-  term:=env.term_id;
+  user:=e.user_id;
+  term:=e.term_id;
 
   nc_on_ln:=0;
-  //init_nc;
+  init_nc;
 
   while true do begin
-   //draw_nc (nc_on_ln);
 
-   Write (user + '@' + term + '> ');
-   ReadLn (cmd);
-   cmd:=LowerCase (Trim (cmd));
 
-   found:=false;
-
-   for i:=0 to High (args) div 2 do begin
-    if (args[i*2].VType = vtPointer) and
-       (args[i*2+1].VType = vtAnsiString) and
-       (cmd = trunc_bin (str (args[i*2+1].VAnsiString))) then
-    begin
-      proc_str_t (args[i*2].VPointer)
-       (str (args[i*2+1].VAnsiString));
-
-      found:=true;
-      Break;
+   case ch of KEY_DOWN, Ord('j'):  Inc (nc_on_ln);
     end;
-   end;
+
+   case ch of KEY_UP, Ord('k'):  Dec (nc_on_ln);
+    end;
+
+   draw_nc ('', g_vars, nc_on_ln);
+   ch:=getch;
+
+   //Write (user + '@' + term + '> ');
+   //ReadLn (cmd);
+   //cmd:=LowerCase (Trim (cmd));
+   //
+   //found:=false;
+
+   //for i:=0 to High (args) div 2 do begin
+   // if (args[i*2].VType = vtPointer) and
+   //    (args[i*2+1].VType = vtAnsiString) and
+   //    (cmd = trunc_bin (str (args[i*2+1].VAnsiString))) then
+   // begin
+   //   proc_str_t (args[i*2].VPointer)
+   //    (str (args[i*2+1].VAnsiString));
+   //
+   //   found:=true;
+   //   Break;
+   // end;
+   //end;
 
     if not found then WriteLn ('Unknown command.');
 
@@ -85,12 +92,7 @@ begin
 
 end;
 
-procedure arg_call (const dummy_arg:  str);
-begin
-  run_cli_nc (g_vars);
-end;
-
-procedure run_app (const path: str);
+procedure exec_app (const path: str);
 var
   proc: TProcess;
   app_dir: str;

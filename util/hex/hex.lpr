@@ -33,13 +33,17 @@ begin
   arg.id:='scull size -13 in.';
   args_pop_e (g_vars, arg);
 
-  draw_nc ('', g_vars, 0);
-  mvprintw (5, 1,
-    'The basics are sometimes all you need to look good, in bitchcraft <3');
-  mvprintw (6, 1, PChar(emoji));
+  arg.id:=
+    'The basics are sometimes all you need to look good, in bitchcraft <3';
+  args_pop_e (g_vars, arg);
+
+  arg.id:=emoji;
+  args_pop_e (g_vars, arg);
 end;
 
 begin
+  bark_wai_fu (HEART_MOJ);
+
   g_env.user_id:=USER_NAME_DE;
   g_env.term_id:=TERM_NAME_DE;
 
@@ -48,16 +52,12 @@ begin
    // Ask for options and whether to configure a new user, remember 4 later typa
    //
    // Usage (just write):  klaw, firefox ...
-   //run_cli (g_env,
-   //         [@exec_app, KLAW_PATH_B + 'klaw',
-   //          @exec_app, '/mnt/dump_dsk/INST/firefox/firefox']);
-   //
+   run_cli (g_env,
+            [@exec_app, KLAW_PATH_B + 'klaw',
+             @exec_app, '/mnt/dump_dsk/INST/firefox/firefox']);
+
 
    // Screens @ foot/:
    // codeberg.org/basedfigure/foot/src/branch/main/laz/hex
-   init_nc;
-   bark_wai_fu (HEART_MOJ);
-   getch;
-   endwin;
 end.
 
