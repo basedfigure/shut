@@ -22,15 +22,21 @@ var
 procedure bark_wai_fu (const emoji:  str = '<3');
 { Wrap her in a gift box }
 begin
+  // Lily padding (dojo):  step
+
   args_init (g_vars);
   g_vars[0].id:='Unromance +6';
 
-  draw_nc ('Unromance +6', g_vars, 0);
-  //mvprintw (3, 1, 'ncurses is my bitch');
-  //mvprintw (4, 1, 'scull size -13 in.');
-  //mvprintw (5, 1,
-  //  'The basics are sometimes all you need to look good, in bitchcraft <3');
-  //mvprintw (6, 1, PChar(emoji));
+  arg.id:='ncurses is my bitch';
+  args_pop_e (g_vars, arg);
+
+  arg.id:='scull size -13 in.';
+  args_pop_e (g_vars, arg);
+
+  draw_nc ('', g_vars, 0);
+  mvprintw (5, 1,
+    'The basics are sometimes all you need to look good, in bitchcraft <3');
+  mvprintw (6, 1, PChar(emoji));
 end;
 
 begin

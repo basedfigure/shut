@@ -30,20 +30,20 @@ var
   i: int;
 begin
   clear;
-  mvprintw (0, 2, 'Move:  j/k,  Select:  enter');
+  //mvprintw (0, 2, 'Move:  j/k,  Select:  enter');
+  //
+  //
+  for i:=0 to High (larg) do begin
+    if i = on_ln then attron (A_REVERSE);
 
-  //
-  //for i:=0 to High (larg) do begin
-  //  if i = on_ln then attron (A_REVERSE);
-  //
-  //  mvprintw (i + 2, 2, '%s', PChar(larg[i].id));
-  //
-  //  if i = on_ln then attroff (A_REVERSE);
-  //
-  //end;
-  //
+    mvprintw (i + 2, 1, '%s', PChar(larg[i].id));
 
-  //
+    if i = on_ln then attroff (A_REVERSE);
+
+  end;
+
+
+  // style test:
   attron (A_REVERSE);
   mvprintw (2, 1, '%s', PChar(s));
 
@@ -52,7 +52,8 @@ begin
     mvprintw (0, 1, 'WIDE RIBBON');
 
   attroff (A_REVERSE);
-  //
+
+
 
   refresh;
 end;
