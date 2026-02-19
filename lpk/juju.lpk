@@ -15,12 +15,20 @@
         <UnitName Value="apputil"/>
       </Item>
       <Item>
+        <Filename Value="barkutil.pas"/>
+        <UnitName Value="barkutil"/>
+      </Item>
+      <Item>
         <Filename Value="fmtsak.pas"/>
         <UnitName Value="fmtsak"/>
       </Item>
       <Item>
         <Filename Value="fmtutil.pas"/>
         <UnitName Value="fmtutil"/>
+      </Item>
+      <Item>
+        <Filename Value="ncutil.pas"/>
+        <UnitName Value="ncutil"/>
       </Item>
       <Item>
         <Filename Value="typutil.pas"/>
