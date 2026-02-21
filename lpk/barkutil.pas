@@ -35,7 +35,7 @@ type
 
   board_t = record
     luser:  array of user_t;
-    lpost:  array of post_t;
+    //lpost:  array of post_t;
   end;
 
   { TBark }
@@ -52,7 +52,53 @@ type
     path:  str;
   end;
 
+
+  procedure bark_hey;
+  procedure bark_bye;
+  procedure bark_wai_fu (const emoji:  str = '<3');
+
 implementation
+
+uses
+  apputil;
+
+
+{ (bark)eth }
+
+procedure bark_hey;
+begin
+  WriteLn ('Helo to ', g_env.user_id);
+end;
+
+procedure bark_bye;
+begin
+  WriteLn ('Bye to ', g_env.user_id);
+end;
+
+procedure bark_wai_fu (const emoji:  str = '<3');
+{ Wrap her in a gift box }
+begin
+  // Lily padding (dojo):  step
+
+  // Wai-fu (lore url):  en.wikipedia.org/wiki/Konami_Wai_Wai_World
+
+  args_init (g_vars);
+  g_vars[0].id:='Unromance +6';
+
+  arg.id:='ncurses is my bitch';
+  args_pop_e (g_vars, arg);
+
+  arg.id:='scull size -13 in.';
+  args_pop_e (g_vars, arg);
+
+  arg.id:=
+    'The basics are sometimes all you need to look good, in bitchcraft <3';
+  args_pop_e (g_vars, arg);
+
+  arg.id:=emoji;
+  args_pop_e (g_vars, arg);
+end;
+
 
 { TBark }
 
