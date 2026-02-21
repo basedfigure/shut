@@ -1,13 +1,10 @@
-unit typutil;
+unit typutil;  // misc
 
 {$mode ObjFPC}{$H+}
 {$DEFINE TWO_CHAR_EMOJI} // fpc -dTWO_CHAR_EMOJI
 // Guideposts @ foot/laz/menu/
 
 interface
-
-uses
-  Classes, SysUtils;
 
 
   { * Style guide (e.g):
@@ -99,6 +96,9 @@ uses
   Ffortless
   }
 
+uses
+  Classes, SysUtils;
+
 const
     GIT_URL   = 'https://github.com/basedfigure/juju';
     IO_PATH_R = '../../../io/';
@@ -124,24 +124,50 @@ type
   str_p  = PString;
   bool_p = PBoolean;
 
+
   // Typed subroutines
   proc_str_t = procedure (const arg:  str);
+  proc_oo = procedure of object;
 
   { (arg)ument }
 
   arg_t = record
-    proc:  proc_str_t;
+    //proc:  proc_t;
     id:  str;
   end;
 
-  arg_e = (a_dummy);
+  proc_sa_t = procedure (const args: array of str);
+  proc_t = procedure ();
+
+  arg_e = (a_none, a_exec, a_help, a_bugrep);
+
+  proc_af = array [arg_e] of proc_t;
+
   arg_a = array of arg_t;
-  arg_af = array [arg_e] of arg_t;
 
   { env_t }
 
   env_t = record
     user_id, term_id:  str;
+  end;
+
+var
+  proc_a:  proc_af;
+
+  arg: arg_t;
+  a: arg_a;
+
+  // ..arrays
+  pa:  poi_a;
+
+  g_vars:  arg_a;
+  // ..
+  //g_vars:  arg_a = (
+  //  (proc: @at_exec;  id: 'exec'));
+
+  g_vars_:  array of record
+    proc:  proc_t;
+    id: str;
   end;
 
 const
@@ -157,31 +183,34 @@ const
   {$ENDIF}
     HEART_MOJ = '<3';
 
-var
-  // ..arrays
-  pa:  poi_a;
-
-  g_vars:  arg_a;
-  // ..
-  // g_vars:  arg_a = (
-    //(proc: @cmd_exec;  id: 'exec';  group:  g_exec);
-
 
   { (poi)nter }
 
 
   { (de)bug }
-  procedure de_print_ln (s: str = '');
-  procedure de_print_blk (s: str;  head: str = 'FILL UP';  sym: str = ':');
-  procedure de_print_env (e:  env_t);
+  procedure de_bark_ln (s: str = '');
+  procedure de_bark_blk (s: str;  head: str = 'FILL UP';  sym: str = ':');
+  procedure de_bark_env (e:  env_t);
 
 
   { args - auto create local var by filling in 'a',  ctrl-sh-c }
 
   procedure args_init (var a:  arg_a);
   procedure args_pop_e (var a:arg_a;  const t:arg_t);
+
+  { procs }
+
+  procedure proc_at (e:  arg_e;  p:  proc_t);
+
 implementation
 
+
+{ procs }
+
+procedure proc_at (e:  arg_e;  p:  proc_t);
+begin
+  proc_a[e]:=p;
+end;
 
 { args ... }
 
@@ -204,19 +233,19 @@ end;
 
 { (de)bug }
 
-procedure de_print_ln (s: str = '');
+procedure de_bark_ln (s: str = '');
 begin
   Writeln (s);
 end;
 
-procedure de_print_blk (s: str;  head: str = 'FILL UP';  sym: str = ':');
+procedure de_bark_blk (s: str;  head: str = 'FILL UP';  sym: str = ':');
 begin
   Writeln ('');
   Writeln (head + sym);
   Writeln (s);
 end;
 
-procedure de_print_env (e:  env_t);
+procedure de_bark_env (e:  env_t);
 begin
   Writeln ('');
   Writeln ('User: ' + e.user_id);
