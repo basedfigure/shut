@@ -6,8 +6,9 @@ interface
 
 uses
   Classes, SysUtils, process,
+  ncurses,
   // Juju:
-  typutil, ncutil, ncurses;
+  typutil, ncutil, barkutil;
 
 const
   UTIL_PATH_R = '../';
@@ -50,17 +51,31 @@ begin
   nc_on_ln:=0;
   init_nc;
 
+  // du:  num keys to jump to any arg, but vi keys are the norm, so not always
   while true do begin
-
-
-   case ch of KEY_DOWN, Ord('j'):  Inc (nc_on_ln);
-    end;
-
-   case ch of KEY_UP, Ord('k'):  Dec (nc_on_ln);
-    end;
+   if nc_on_ln < 0 then
+     nc_on_ln:=0
+   else if nc_on_ln > High (g_vars) then nc_on_ln:=High (g_vars);
 
    draw_nc ('', g_vars, nc_on_ln);
    ch:=getch;
+
+   case ch of
+    //  note:  how the 'j' key has a tactile bump on it - you don't have to look
+    KEY_DOWN, Ord ('j'):  if nc_on_ln < High (g_vars) then Inc (nc_on_ln);
+
+
+    KEY_UP, Ord ('k'):  if nc_on_ln > 0 then Dec (nc_on_ln);
+
+    10, 13:  // enter key
+    begin
+
+     if (nc_on_ln >= 0) and (nc_on_ln <= High (g_vars)) then begin
+
+     end;
+
+    end;
+   end;
 
    //Write (user + '@' + term + '> ');
    //ReadLn (cmd);

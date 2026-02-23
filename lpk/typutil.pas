@@ -152,7 +152,7 @@ type
   end;
 
 var
-  proc_a:  proc_af;
+  proc_a:  proc_af;  // directives to use fixed or non
 
   arg: arg_t;
   a: arg_a;
@@ -165,7 +165,7 @@ var
   //g_vars:  arg_a = (
   //  (proc: @at_exec;  id: 'exec'));
 
-  g_vars_:  array of record
+  g_vars_:  array of record // sh-space:  great for auto complete etc.
     proc:  proc_t;
     id: str;
   end;
@@ -187,12 +187,6 @@ const
   { (poi)nter }
 
 
-  { (de)bug }
-  procedure de_bark_ln (s: str = '');
-  procedure de_bark_blk (s: str;  head: str = 'FILL UP';  sym: str = ':');
-  procedure de_bark_env (e:  env_t);
-
-
   { args - auto create local var by filling in 'a',  ctrl-sh-c }
 
   procedure args_init (var a:  arg_a);
@@ -202,15 +196,13 @@ const
 
   procedure proc_at (e:  arg_e;  p:  proc_t);
 
+  { (de)bug }
+  procedure de_bark_ln (s: str = '');
+  procedure de_bark_blk (s: str;  head: str = 'FILL UP';  sym: str = ':');
+  procedure de_bark_env (e:  env_t);
+
 implementation
 
-
-{ procs }
-
-procedure proc_at (e:  arg_e;  p:  proc_t);
-begin
-  proc_a[e]:=p;
-end;
 
 { args ... }
 
@@ -227,8 +219,17 @@ begin
   a[n]:=t;
 end;
 
-{ (poi)nter }
 
+{ procs }
+
+procedure proc_at (e:  arg_e;  p:  proc_t);
+begin
+  proc_a[e]:=p;
+  //  call:  proc_at (a_exec, @bark_hey);
+end;
+
+
+{ (poi)nter }
 
 
 { (de)bug }

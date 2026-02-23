@@ -78,8 +78,6 @@ end;
 procedure bark_wai_fu (const emoji:  str = '<3');
 { Wrap her in a gift box }
 begin
-  // Lily padding (dojo):  step
-
   // Wai-fu (lore url):  en.wikipedia.org/wiki/Konami_Wai_Wai_World
 
   args_init (g_vars);
@@ -92,7 +90,16 @@ begin
   args_pop_e (g_vars, arg);
 
   arg.id:=
-    'The basics are sometimes all you need to look good, in bitchcraft <3';
+    'The basics are sometimes all you need to look good, in bitchcraft';
+  args_pop_e (g_vars, arg);
+
+  arg.id:='Will you be my wai-foon?';
+  args_pop_e (g_vars, arg);
+
+  arg.id:='Howly moon';
+  args_pop_e (g_vars, arg);
+
+  arg.id:='La li lu le loove <3';
   args_pop_e (g_vars, arg);
 
   arg.id:=emoji;
