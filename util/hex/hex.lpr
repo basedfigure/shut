@@ -33,7 +33,7 @@ begin
             [@exec_app, KLAW_PATH_B + 'klaw',
              @exec_app, '/mnt/dump_dsk/INST/firefox/firefox']);
 
-
+   de_bark_swe_wc (SWE_UPP_A);
    // Screens @ foot/:
    // codeberg.org/basedfigure/foot/src/branch/main/laz/hex
 end.

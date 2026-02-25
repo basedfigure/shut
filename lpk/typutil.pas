@@ -96,6 +96,9 @@ interface
   Ffortless
   }
 
+  { Web resources:
+    https://www.freepascal.org/docs-html/ref/ref.html }
+
 uses
   Classes, SysUtils;
 
@@ -105,19 +108,36 @@ const
     SH_PATH_R   = '../../../sh/';
 
     // Conventions:
-    FIXD_N_A = 0;
-
+    // ..arrays
+    A_FIXD_N = 0;
+    // Å Ä Ö
+    SWE_UPP_A: array[0..2] of widechar =
+      (widechar ($00C5), widechar ($00C4), widechar ($00D6));
+    SWE_LOW_A: array[0..2] of widechar =
+      (widechar ($00E5), widechar ($00E4), widechar ($00F6));
 
 type
+  { Web resources:
+    www.freepascal.org/docs-html/rtl/system/qword.html
+    www.freepascal.org/docs-html/rtl/system/longword.html }
 
   // Type aliasing
-  int  = integer;
-  str  = string;
   bool = boolean;
+
+  int  = integer;
+  msec = int64;
+  sec  = int64;
+  // GetTickCount64: QWord  // ctrl-lmb to jump
+
+  // Text based games/utils:  myst, rpg
+  az_upp_t = 'A'..'Z';
+  az_low_t = 'a'..'z';
+
+  str  = string;
   // ..arrays
   str_a  = array of string;
   var_a  = array of variant;
-  var_af = array [0..FIXD_N_A] of variant;
+  var_af = array [0..A_FIXD_N] of variant;
   poi_a  = array of pointer;
   // ..pointers
   int_p  = PInteger;
@@ -141,6 +161,7 @@ type
 
   arg_e = (a_none, a_exec, a_help, a_bugrep);
 
+  proc_a = array of proc_t;
   proc_af = array [arg_e] of proc_t;
 
   arg_a = array of arg_t;
@@ -152,7 +173,8 @@ type
   end;
 
 var
-  proc_a:  proc_af;  // directives to use fixed or non
+  procs:  proc_af;
+
 
   arg: arg_t;
   a: arg_a;
@@ -197,6 +219,7 @@ const
   procedure proc_at (e:  arg_e;  p:  proc_t);
 
   { (de)bug }
+  procedure de_bark_swe_wc (const a:  array of widechar);
   procedure de_bark_ln (s: str = '');
   procedure de_bark_blk (s: str;  head: str = 'FILL UP';  sym: str = ':');
   procedure de_bark_env (e:  env_t);
@@ -224,7 +247,7 @@ end;
 
 procedure proc_at (e:  arg_e;  p:  proc_t);
 begin
-  proc_a[e]:=p;
+  procs[e]:=p;
   //  call:  proc_at (a_exec, @bark_hey);
 end;
 
@@ -233,6 +256,19 @@ end;
 
 
 { (de)bug }
+
+procedure de_bark_swe_wc (const a: array of widechar);
+var
+  i: int;
+  s:  UnicodeString;
+begin
+  Writeln ();
+  for i:=Low (a) to High (a) do begin
+    s:=a[i]; // remap
+    Writeln (' Char: ', UTF8Encode (s), ' Code: ', Ord (a[i]));
+  end;
+  Writeln ();
+end;
 
 procedure de_bark_ln (s: str = '');
 begin
@@ -248,10 +284,10 @@ end;
 
 procedure de_bark_env (e:  env_t);
 begin
-  Writeln ('');
+  Writeln ();
   Writeln ('User: ' + e.user_id);
   Writeln ('Term: ' + e.term_id);
-  Writeln ('');
+  Writeln ();
 end;
 
 end.
