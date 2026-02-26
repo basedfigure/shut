@@ -2,12 +2,19 @@ unit typutil;  // misc
 
 {$mode ObjFPC}{$H+}
 // Guideposts @ foot/laz/menu/
+// - codeberg.org/basedfigure/foot
 
 interface
 
   { * Web resources:
-    www.freepascal.org/docs-html/ref/ref.html
-    www.freepascal.org/docs-html/prog/prog.html }
+    www.freepascal.org/docs-html/current/ref/ref.html
+     - www.freepascal.org/docs-html/ref/ref.html
+    www.freepascal.org/docs-html/prog/prog.html
+
+    * by Marco van de Voort
+    www.stack.nl/~marcov/buildfaq.pdf
+    www.stack.nl/~marcov/porting.pdf
+    }
 
 uses
   Classes, SysUtils,
@@ -27,11 +34,11 @@ const
 
 type
   { * Web resources:
-    www.freepascal.org/docs-html/prog/progse32.html#progsu158.html
+    www.freepascal.org/docs-html/prog/progse32.html
     www.freepascal.org/docs-html/rtl/system/qword.html
     www.freepascal.org/docs-html/rtl/system/longword.html }
 
-  proj_e = (p_juju, p_dojo);
+  proj_e = (p_juju, p_dojo, p_hood);
   { * The ecosystem aims to support text, 2d, 3d and their hybridization.
     * By complexity level:
       - TXT/TUI:  juju
@@ -60,7 +67,10 @@ type
   TCurrency = Currency;
 
   {$IFDEF CPUX86_64}
-    //
+    // *
+    // wiki.freepascal.org/Platform_defines
+    // wiki.freepascal.org/Compiler_directive
+    // www.freepascal.cn/docs-html/current/prog/progsu23.html
     real_t = double;
   {$ENDIF}
 
@@ -89,6 +99,7 @@ type
   { (arg)ument }
 
   proc_t = procedure ();
+  proc_sa_t = procedure (const args: array of str);
 
   arg_t = record
     proc:  proc_t;
@@ -98,7 +109,6 @@ type
   arg_e = (a_none, a_exec, a_help, a_bugrep);
   arg_a = array of arg_t;
 
-  proc_sa_a = procedure (const args: array of str);
   proc_a = array of proc_t;
   proc_af = array [arg_e] of proc_t;
 
@@ -123,7 +133,7 @@ type
 
 var
   { * Web resources:
-    www.freepascal.org/docs-html/current/ref/refse23.html#x54-740004.3 }
+    www.freepascal.org/docs-html/current/ref/refse23.html }
   procs:  proc_af;
 
 
