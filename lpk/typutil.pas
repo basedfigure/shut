@@ -1,8 +1,10 @@
 unit typutil;  // misc
 
 {$mode ObjFPC}{$H+}
-// Guideposts @ foot/laz/menu/
-// - codeberg.org/basedfigure/foot
+//{$PACKRECORDS n}
+// - www.freepascal.org/docs-html/3.0.0/prog/progsu60.html
+
+
 
 interface
 
@@ -48,7 +50,25 @@ type
       platformer, hack n' slash, shooter, fighter
   }
 
+
+
   // Type aliasing
+
+
+
+  // ..pointers
+  {$IFDEF DE_PROF}
+    {$IFDEF CPU64}
+      mem_p = QWord;
+    {$ELSE}
+      mem_p = Cardinal;  // 32-bit
+    {$ENDIF}
+  {$ENDIF}
+
+  int_p  = PInteger;
+  str_p  = PString;
+  bool_p = PBoolean;
+
   bool = boolean;
 
   // ..integers
@@ -71,52 +91,66 @@ type
     // wiki.freepascal.org/Platform_defines
     // wiki.freepascal.org/Compiler_directive
     // www.freepascal.cn/docs-html/current/prog/progsu23.html
-    real_t = double;
+    real_t = f64;
   {$ENDIF}
 
   // For text based games/utils:  myst, rpg
   // ..chars
   az_upp_t = 'A'..'Z';
   az_low_t = 'a'..'z';
+
   // ..strings
   str  = string;
+
   // ..arrays
   str_a  = array of string;
   var_a  = array of variant;
   var_af = array [0..A_FIXD_N] of variant;
   poi_a  = array of pointer;
-  // ..pointers
-  int_p  = PInteger;
-  str_p  = PString;
-  bool_p = PBoolean;
 
   lang_e = (l_eng, l_fin);
 
+
+
   // Typed subroutines
+
+
+
   proc_str_t = procedure (const arg:  str);
   proc_oo = procedure of object;
 
-  { (arg)ument }
-
   proc_t = procedure ();
   proc_sa_t = procedure (const args: array of str);
+
+
+
+  // Records
+
+
+
+  { mem_t }
+
+  mem_t = record
+    foot, at, fin_:  PByte;
+    {$IFDEF DE_PROF}
+      size, peak, nbump:  mem_p;
+    {$ENDIF}
+  end;
+
+  { (arg)ument }
 
   arg_t = record
     proc:  proc_t;
     id:  str;
   end;
 
+  { (a)rrays }
+
   arg_e = (a_none, a_exec, a_help, a_bugrep);
   arg_a = array of arg_t;
 
   proc_a = array of proc_t;
   proc_af = array [arg_e] of proc_t;
-
-  { env_t }
-
-  env_t = record
-    user_id, term_id:  str;
-  end;
 
   { url_t }
 
@@ -131,17 +165,21 @@ type
     rat:  f32;
   end;
 
+  { env_t }
+
+  env_t = record
+    user_id, term_id:  str;
+  end;
+
+
 var
   { * Web resources:
     www.freepascal.org/docs-html/current/ref/refse23.html }
   procs:  proc_af;
-
-
-  arg: arg_t;
-  a: arg_a;
+  arg:  arg_t;
 
   // ..arrays
-  pa:  poi_a;
+  a: arg_a;
 
   g_vars:  arg_a;
   // ..
@@ -153,9 +191,17 @@ var
     id: str;
   end;
 
+  // ..pointers
+  pa:  poi_a;
 
-  { (poi)nter }
+  g_mem:  mem_t;
 
+
+  { (mem) arena }
+  procedure mem_boot ();
+  procedure mem_heap ();
+  procedure mem_kill ();
+  procedure mem_free ();
 
   { args - auto create local var by filling in 'a',  ctrl-sh-c }
 
@@ -172,10 +218,40 @@ var
   procedure de_bark_blk (s: str;  head: str = 'FILL UP';  sym: str = ':');
   procedure de_bark_env (e:  env_t);
 
+
 implementation
 
 
+
+{ (mem) arena }
+
+
+
+procedure mem_boot ();
+begin
+
+end;
+
+procedure mem_heap ();
+begin
+
+end;
+
+procedure mem_kill ();
+begin
+
+end;
+
+procedure mem_free ();
+begin
+
+end;
+
+
+
 { args ... }
+
+
 
 procedure args_init (var a:  arg_a);
 begin
@@ -191,7 +267,10 @@ begin
 end;
 
 
+
 { procs }
+
+
 
 procedure proc_at (e:  arg_e;  p:  proc_t);
 begin
@@ -201,10 +280,10 @@ begin
 end;
 
 
-{ (poi)nter }
-
 
 { (de)bug }
+
+
 
 procedure de_bark_swe_wc (const a: array of widechar);
 var
