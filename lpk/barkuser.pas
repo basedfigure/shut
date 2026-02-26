@@ -14,9 +14,31 @@ uses
 
 type
 
+  { lang_t }
+
+  lang_t = record
+
+  end;
+
+  { opus_t }
+
+  opus_t = record
+
+  end;
+
+  { cal_t }
+
+  cal_t = record
+
+  end;
+
+  { team_t }
+
   team_t = record
     // users, pairings
   end;
+
+  { user_t }
 
   user_t = record
     t:  team_t;
@@ -24,22 +46,62 @@ type
     know, pair:  int;
   end;
 
+  { mold_t }
+
   mold_t = record
     desc:  str_a;
-    // skin_t
+    // fmt_t;
   end;
 
-procedure bark_wai_fu (const emoji:  str = '<3');
+
+  // ..corpuses
+  procedure pray_to_mata (by:  user_t);  // guidance
+  procedure pray_for_info (p:  proj_e);
+  procedure pray_to_do (c:  cal_t);
+  //procedure pray_to_line (l: lang_t;  o:  opus_t);
+  // ..summons
+  // en.wikipedia.org/wiki/Familiar
+  procedure bark_dog (const s:  str = 'woof');
+  procedure bark_goat (const s:  str = 'hoof');
+  procedure bark_wai_fu (const emoji:  str = '<3');
 
 implementation
 
-procedure pray_to_do ();
+procedure pray_to_mata (by:  user_t);
 begin
+
+end;
+
+procedure pray_for_info (p:  proj_e);
+begin
+
+end;
+
+procedure pray_to_do (c:  cal_t);
+begin
+  // * The Cloister:
   // * Pattern:  order & chaos to work both those hemispheres
   // - convert to my ways, if you want
+  // ex:
+  // a jedi is nearing you
   //
+  // * The Catacombs:
   // place your todo list in some file and work your magic on it here
   // - get a random thing to work on
+  // ex:
+  // a sith lurks nearby
+end;
+
+procedure bark_dog (const s:  str = 'woof');
+begin
+  // dog skin
+  // sitting by
+end;
+
+procedure bark_goat (const s:  str = 'hoof');
+begin
+  // goat fur
+  // behooves you
 end;
 
 procedure bark_wai_fu (const emoji:  str = '<3');
