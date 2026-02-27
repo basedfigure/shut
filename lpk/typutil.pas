@@ -1,8 +1,13 @@
 unit typutil;  // misc
 
 {$mode ObjFPC}{$H+}
+// wiki.freepascal.org/Compiler_Mode
+// wiki.freepascal.org/modeswitches
+
 //{$PACKRECORDS n}
 // - www.freepascal.org/docs-html/3.0.0/prog/progsu60.html
+{$DEFINE DE_PROF}
+{$DEFINE CPU64}
 
 
 
@@ -13,7 +18,7 @@ interface
      - www.freepascal.org/docs-html/ref/ref.html
     www.freepascal.org/docs-html/prog/prog.html
 
-    * by Marco van de Voort
+    * by Marco van de Voort:
     www.stack.nl/~marcov/buildfaq.pdf
     www.stack.nl/~marcov/porting.pdf
     }
@@ -34,11 +39,23 @@ const
     // ..arrays
     A_FIXD_N = 0;
 
+    // ..(mem)
+    MEM_KB = 1024;  // 1 KiB
+    MEM_MB = 1024 * MEM_KB;  // 1 MiB
+
+    MEM_64K = 64 * MEM_KB;  // 64 KiB
+    MEM_256K = 256 * MEM_KB;  // 256 KiB
+    MEM_1MB = MEM_MB;  // 1 MiB
+
+    MEM_PAGE_OS = 4 * MEM_KB;  // 4 KiB
+
 type
   { * Web resources:
     www.freepascal.org/docs-html/prog/progse32.html
     www.freepascal.org/docs-html/rtl/system/qword.html
-    www.freepascal.org/docs-html/rtl/system/longword.html }
+    www.freepascal.org/docs-html/rtl/system/longword.html
+    www.freepascal.org/docs-html/ref/refse15.html
+    wiki.freepascal.org/Pointer}
 
   proj_e = (p_juju, p_dojo, p_hood);
   { * The ecosystem aims to support text, 2d, 3d and their hybridization.
@@ -53,7 +70,7 @@ type
 
 
   // Type aliasing
-
+  // - wiki.freepascal.org/Memory_Management
 
 
   // ..pointers
@@ -68,6 +85,7 @@ type
   int_p  = PInteger;
   str_p  = PString;
   bool_p = PBoolean;
+  poi    = pointer;
 
   bool = boolean;
 
@@ -124,7 +142,9 @@ type
 
 
 
-  // Records
+  // Records & object types
+  // wiki.freepascal.org/Record
+  // wiki.freepascal.org/Object
 
 
 
@@ -197,11 +217,17 @@ var
   g_mem:  mem_t;
 
 
+
+  // Routines
+
+
+
   { (mem) arena }
-  procedure mem_boot ();
-  procedure mem_heap ();
-  procedure mem_kill ();
-  procedure mem_free ();
+  procedure mem_boot (var m:mem_t;  big:mem_p);
+  procedure mem_null (var m:mem_t);
+  procedure mem_kill (var m:mem_t);
+  procedure mem_zero (var m:mem_t);
+  function  mem_bump (var m:mem_t;  big: mem_p):  poi;
 
   { args - auto create local var by filling in 'a',  ctrl-sh-c }
 
@@ -227,24 +253,50 @@ implementation
 
 
 
-procedure mem_boot ();
+procedure mem_boot (var m:mem_t;  big:mem_p);
 begin
-
+  GetMem (m.foot, big);
+  m.at   :=m.foot;
+  m.fin_ :=m.foot + big;
+  {$IFDEF DE_PROF}
+    m.size :=big;
+    m.peak :=0;
+    m.nbump:=0;
+  {$ENDIF}
 end;
 
-procedure mem_heap ();
+procedure mem_null (var m:mem_t);
 begin
-
+  m.foot:=nil;
+  m.at:=nil;
+  m.fin_:=nil;
 end;
 
-procedure mem_kill ();
+procedure mem_kill (var m:mem_t);
 begin
-
+  if m.foot <> nil then
+    Freemem (m.foot);
+  mem_null (m);
 end;
 
-procedure mem_free ();
+procedure mem_zero (var m:mem_t);
 begin
+  m.at:=m.foot;
+end;
 
+function mem_bump (var m:mem_t;  big:mem_p):  poi;
+var
+  p:  PByte;
+begin
+  if m.at + big > m.fin_ then Exit (nil);
+
+  p:=m.at;
+  Inc (m.at, big);
+  {$IFDEF DE_PROF}
+    //
+  {$ENDIF}
+
+  result:=p;
 end;
 
 
