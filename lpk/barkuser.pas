@@ -58,7 +58,9 @@ type
   procedure pray_to_mata (by:  user_t);  // guidance
   procedure pray_for_info (p:  proj_e);
   procedure pray_to_do (c:  cal_t);
-  //procedure pray_to_line (l: lang_t;  o:  opus_t);
+  procedure pray_to_line (l: lang_e;  o:  opus_t);
+  // ..actions
+  procedure do_kiss (const lass:  str = '(^3^)');
   // ..summons
   // en.wikipedia.org/wiki/Familiar
   procedure bark_dog (const s:  str = 'woof');
@@ -90,6 +92,17 @@ begin
   // - get a random thing to work on
   // ex:
   // a sith lurks nearby
+end;
+
+procedure pray_to_line (l: lang_e; o: opus_t);
+begin
+
+end;
+
+procedure do_kiss (const lass:  str = '(^3^)');
+begin
+  // drab
+  // drip
 end;
 
 procedure bark_dog (const s:  str = 'woof');

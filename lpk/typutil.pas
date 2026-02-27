@@ -39,7 +39,7 @@ const
     // ..arrays
     A_FIXD_N = 0;
 
-    // ..(mem)
+    // ..(mem) arena
     MEM_KB = 1024;  // 1 KiB
     MEM_MB = 1024 * MEM_KB;  // 1 MiB
 
@@ -82,10 +82,10 @@ type
     {$ENDIF}
   {$ENDIF}
 
+  poi    = pointer;
   int_p  = PInteger;
   str_p  = PString;
   bool_p = PBoolean;
-  poi    = pointer;
 
   bool = boolean;
 
@@ -195,6 +195,9 @@ type
 var
   { * Web resources:
     www.freepascal.org/docs-html/current/ref/refse23.html }
+  // (mem)ory arena
+  g_mem:  mem_t;
+
   procs:  proc_af;
   arg:  arg_t;
 
@@ -214,15 +217,13 @@ var
   // ..pointers
   pa:  poi_a;
 
-  g_mem:  mem_t;
-
 
 
   // Routines
 
 
 
-  { (mem) arena }
+  { (mem)ory arena }
   procedure mem_boot (var m:mem_t;  big:mem_p);
   procedure mem_null (var m:mem_t);
   procedure mem_kill (var m:mem_t);
@@ -249,7 +250,7 @@ implementation
 
 
 
-{ (mem) arena }
+{ (mem)ory arena }
 
 
 
@@ -293,7 +294,9 @@ begin
   p:=m.at;
   Inc (m.at, big);
   {$IFDEF DE_PROF}
-    //
+    Inc (m.nbump);
+    if mem_p (m.at - m.foot) > m.peak then
+      m.peak:=mem_p (m.at - m.foot);
   {$ENDIF}
 
   result:=p;
