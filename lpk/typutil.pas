@@ -37,17 +37,8 @@ const
 
     // Conventions:
     // ..arrays
-    A_FIXD_N = 0;
-
-    // ..(mem) arena
-    MEM_KB = 1024;  // 1 KiB
-    MEM_MB = 1024 * MEM_KB;  // 1 MiB
-
-    MEM_64K = 64 * MEM_KB;  // 64 KiB
-    MEM_256K = 256 * MEM_KB;  // 256 KiB
-    MEM_1MB = MEM_MB;  // 1 MiB
-
-    MEM_PAGE_OS = 4 * MEM_KB;  // 4 KiB
+    // www.freepascal.org/docs-html/ref/refsu14.html
+    A_FIXD_N = 0; // = 1
 
 type
   { * Web resources:
@@ -57,14 +48,48 @@ type
     www.freepascal.org/docs-html/ref/refse15.html
     wiki.freepascal.org/Pointer}
 
-  proj_e = (p_juju, p_dojo, p_hood);
-  { * The ecosystem aims to support text, 2d, 3d and their hybridization.
-    * By complexity level:
-      - TXT/TUI:  juju
-      adventure, crpg, roguelike, mud,
+  proj_e = (
+   p_juju,  // 1)
+   p_dojo,  // 2)
+   p_hood); // 3)
 
-      - 2D/2.5D/3D/GUI:  juju, hood
-      platformer, hack n' slash, shooter, fighter
+  { * Roughly,
+    1) Juju has the console, so it serves as the engine.
+
+    2) Dojo has the game mechanics, with my demo roguelike named dojoband.pas, t
+    o serve as a TUI roguelike/adventure demo, to use with Juju.
+
+    3) Hood is a graphics library for developing with 2D/3D graphics, but is aim
+    ed at just supporting what you need in your specific game right now, instead
+    of any latest formats or rendering techniques. I commend any library authors
+    for trying to stay up with everything!
+
+    * Routine style guide:
+    dojoband draws the ASCII graphics with ncurses, so they're suffixed with _nc
+    and every rogue routine is prefixed band_ so you get "band_draw_nc (glyph)"
+
+    * The ecosystem aims to support text, 2d, 3d and their hybridization.
+
+    * By complexity level:  wiki
+    - TXT/TUI:  juju
+    puzzle, adventure, crpg, roguelike, mud,
+
+    - 2D/2.5D/3D/GUI:  juju, hood
+    platformer, hack n' slash, shooter, fighter
+
+    * wiki:
+    myst:  en.wikipedia.org/wiki/Puzzle_video_game
+    navi:  en.wikipedia.org/wiki/Adventure_game
+    crpg:  en.wikipedia.org/wiki/Role-playing_video_game
+    term:  en.wikipedia.org/wiki/Roguelike
+    mud:   en.wikipedia.org/wiki/Multi-user_dungeon
+    jump:  en.wikipedia.org/wiki/Platformer
+    hack:  en.wikipedia.org/wiki/Hack_and_slash
+    beat:  en.wikipedia.org/wiki/Beat_'em_up
+    gun:   en.wikipedia.org/wiki/Shooter_game
+    vs:    en.wikipedia.org/wiki/Fighting_game
+
+    1) https://en.wikipedia.org/wiki/Tetris
   }
 
 
@@ -73,12 +98,13 @@ type
   // - wiki.freepascal.org/Memory_Management
 
 
+
   // ..pointers
   {$IFDEF DE_PROF}
     {$IFDEF CPU64}
-      mem_p = QWord;
+      mem_pt = QWord;
     {$ELSE}
-      mem_p = Cardinal;  // 32-bit
+      mem_pt = Cardinal;  // 32-bit
     {$ENDIF}
   {$ENDIF}
 
@@ -121,7 +147,10 @@ type
   str  = string;
 
   // ..arrays
+  ch_a  = array of char;
+  ch_af = array [0..A_FIXD_N] of char;
   str_a  = array of string;
+  str_af = array [0..A_FIXD_N] of str;
   var_a  = array of variant;
   var_af = array [0..A_FIXD_N] of variant;
   poi_a  = array of pointer;
@@ -150,10 +179,11 @@ type
 
   { mem_t }
 
+  // ..(mem)ory arena
   mem_t = record
     foot, at, fin_:  PByte;
     {$IFDEF DE_PROF}
-      size, peak, nbump:  mem_p;
+      size, peak, nbump:  mem_pt;
     {$ENDIF}
   end;
 
@@ -174,8 +204,11 @@ type
 
   { url_t }
 
+  http_e = (u_http, u_https);
+
   url_t = record
-    lpart:  str_a;
+    http:  http_e;
+    laddr:  str_a;
   end;
 
   { box_t }
@@ -218,17 +251,33 @@ var
   pa:  poi_a;
 
 
+const
+    // ..(mem)ory arena
+    BITS_PER_BYTE = 8;
+    MEM_BYTE = 1;
+
+    MEM_KB = 1024 * MEM_BYTE;  // 1 KiB
+    MEM_MB = 1024 * MEM_KB;  // 1 MiB
+
+    MEM_64K = 64 * MEM_KB;  // 64 KiB
+    MEM_256K = 256 * MEM_KB;  // 256 KiB
+    MEM_1MB = MEM_MB;  // 1 MiB
+
+    MEM_PAGE_OS = 4 * MEM_KB;  // 4 KiB
+
+
 
   // Routines
 
 
 
   { (mem)ory arena }
-  procedure mem_boot (var m:mem_t;  big:mem_p);
+
+  procedure mem_boot (var m:mem_t;  big:mem_pt);
   procedure mem_null (var m:mem_t);
   procedure mem_kill (var m:mem_t);
   procedure mem_zero (var m:mem_t);
-  function  mem_bump (var m:mem_t;  big: mem_p):  poi;
+  function  mem_bump (var m:mem_t;  big: mem_pt):  poi;
 
   { args - auto create local var by filling in 'a',  ctrl-sh-c }
 
@@ -254,7 +303,7 @@ implementation
 
 
 
-procedure mem_boot (var m:mem_t;  big:mem_p);
+procedure mem_boot (var m:mem_t;  big:mem_pt);
 begin
   GetMem (m.foot, big);
   m.at   :=m.foot;
@@ -285,7 +334,7 @@ begin
   m.at:=m.foot;
 end;
 
-function mem_bump (var m:mem_t;  big:mem_p):  poi;
+function mem_bump (var m:mem_t;  big:mem_pt):  poi;
 var
   p:  PByte;
 begin
@@ -295,8 +344,8 @@ begin
   Inc (m.at, big);
   {$IFDEF DE_PROF}
     Inc (m.nbump);
-    if mem_p (m.at - m.foot) > m.peak then
-      m.peak:=mem_p (m.at - m.foot);
+    if mem_pt (m.at - m.foot) > m.peak then
+      m.peak:=mem_pt (m.at - m.foot);
   {$ENDIF}
 
   result:=p;
