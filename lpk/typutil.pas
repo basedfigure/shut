@@ -13,12 +13,15 @@ unit typutil;  // misc
 
 interface
 
-  { * Web resources:
+  { * Free Pascal contributors:
+    https://www.freepascal.org/aboutus.html
+
+    * Web resources:
     www.freepascal.org/docs-html/current/ref/ref.html
      - www.freepascal.org/docs-html/ref/ref.html
     www.freepascal.org/docs-html/prog/prog.html
 
-    * by Marco van de Voort:
+    - by Marco van de Voort:
     www.stack.nl/~marcov/buildfaq.pdf
     www.stack.nl/~marcov/porting.pdf
     }
@@ -57,7 +60,13 @@ type
     1) Juju has the console, so it serves as the engine.
 
     2) Dojo has the game mechanics, with my demo roguelike named dojoband.pas, t
-    o serve as a TUI roguelike/adventure demo, to use with Juju.
+    o serve as a TUI roguelike/adventure demo, to use with Juju. The reason to d
+    o a game like this is to get to the essence of text-based adventure games an
+    d roguelikes, both of which use ASCII "graphics", where both marry the stats
+    and text -- programming wise and game wise. Here both projects become relati
+    vely quick to test, so as to get any chinks out of the way early. I also lov
+    e those genres, where they're never really used together. They have a lot of
+    untapped potential, especially for the backroom codist.
 
     3) Hood is a graphics library for developing with 2D/3D graphics, but is aim
     ed at just supporting what you need in your specific game right now, instead
@@ -77,19 +86,48 @@ type
     - 2D/2.5D/3D/GUI:  juju, hood
     platformer, hack n' slash, shooter, fighter
 
-    * wiki:
-    myst:  en.wikipedia.org/wiki/Puzzle_video_game
-    navi:  en.wikipedia.org/wiki/Adventure_game
-    crpg:  en.wikipedia.org/wiki/Role-playing_video_game
-    band:  en.wikipedia.org/wiki/Roguelike
-    mud:   en.wikipedia.org/wiki/Multi-user_dungeon
-    jump:  en.wikipedia.org/wiki/Platformer
-    hack:  en.wikipedia.org/wiki/Hack_and_slash
-    beat:  en.wikipedia.org/wiki/Beat_'em_up
-    gun:   en.wikipedia.org/wiki/Shooter_game
-    vs:    en.wikipedia.org/wiki/Fighting_game
+    * wiki, e.g:  by mech/mood
+     1. myst:  en.wikipedia.org/wiki/Puzzle_video_game
+     2. navi:  en.wikipedia.org/wiki/Adventure_game
+     3. crpg:  en.wikipedia.org/wiki/Role-playing_video_game
+     4. band:  en.wikipedia.org/wiki/Roguelike
+     5. mud:   en.wikipedia.org/wiki/Multi-user_dungeon
+     6. tact:  en.wikipedia.org/wiki/Strategy_video_game
+     7. jump:  en.wikipedia.org/wiki/Platformer
+     8. hack:  en.wikipedia.org/wiki/Hack_and_slash
+     9. beat:  en.wikipedia.org/wiki/Beat_'em_up
+    10. gun:   en.wikipedia.org/wiki/Shooter_game
+    11. hell:  en.wikipedia.org/wiki/Shoot_'em_up
+    12. vs:    en.wikipedia.org/wiki/Fighting_game
 
-    1) https://en.wikipedia.org/wiki/Tetris
+     1) en.wikipedia.org/wiki/Tetris
+     2) en.wikipedia.org/wiki/Deus_Ex_(video_game)
+     3) en.wikipedia.org/wiki/Final_Fantasy_VIII
+     4) en.wikipedia.org/wiki/Cogmind
+     5) www.zuggsoft.com/index.php
+     6) en.wikipedia.org/wiki/Commandos:_Behind_Enemy_Lines
+     7) en.wikipedia.org/wiki/Donkey_Kong_Country_2
+     8) en.wikipedia.org/wiki/Diablo_II:_Lord_of_Destruction
+     9) en.wikipedia.org/wiki/Ehrgeiz
+    10) en.wikipedia.org/wiki/Brothers_in_Arms_(video_game_series)
+    11) en.wikipedia.org/wiki/Vampire_Survivors
+    12) en.wikipedia.org/wiki/Street_Fighter_Alpha_3
+
+    * Special mentions to:
+    en.wikipedia.org/wiki/The_Legend_of_Zelda:_A_Link_to_the_Past
+    en.wikipedia.org/wiki/The_Legend_of_Zelda:_Ocarina_of_Time
+    en.wikipedia.org/wiki/Fallout_2
+    en.wikipedia.org/wiki/Final_Fantasy_VII
+    en.wikipedia.org/wiki/Final_Fantasy_IX
+    en.wikipedia.org/wiki/Final_Fantasy_X
+    en.wikipedia.org/wiki/Tom_Clancy's_Rainbow_Six
+    en.wikipedia.org/wiki/Call_of_Duty_4:_Modern_Warfare
+    en.wikipedia.org/wiki/Dark_Souls_(video_game)
+    en.wikipedia.org/wiki/Darkwood
+    stoneshard.com/wiki/Stoneshard_Wiki
+
+    * My favorite game (quirkily perfect):
+    en.wikipedia.org/wiki/Vagrant_Story
   }
 
 
@@ -231,6 +269,7 @@ type
 var
   { * Web resources:
     www.freepascal.org/docs-html/current/ref/refse23.html }
+
   // (mem)ory arena
   g_mem:  mem_t;
 
@@ -382,7 +421,7 @@ end;
 procedure proc_at (e:  arg_e;  p:  proc_arg_oo);
 begin
   procs[e]:=p;
-  { * init, call:
+  { * init, call (e.g):
     proc_at (a_exec, @bark.hey); // no need to pass arg here to hey
 
     procs[a_exec](g_env.user_id);
