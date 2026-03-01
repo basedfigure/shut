@@ -11,6 +11,17 @@ uses
 
 type
 
+  { bark_t }
+
+  { bark_t vs TBark:
+    object vs. class for educational purposes only, but now you won't be confuse
+    d. Pascal was a common educational language historically, but it's serious }
+
+  bark_t = object
+    procedure hey(id:  str);
+    procedure bye(id:  str);
+  end;
+
   { key_t }
 
   key_t = record
@@ -53,57 +64,23 @@ type
   end;
 
 
-  procedure bark_hey;
-  procedure bark_bye;
-  procedure bark_wai_fu (const emoji:  str = '<3');
-
 implementation
 
 uses
   apputil;
 
+{ bark_t }
 
-{ (bark)eth }
-
-procedure bark_hey;
+procedure bark_t.hey (id:  str);
 begin
-  WriteLn ('Helo to ', g_env.user_id);
+  WriteLn ('Helo to ', id);
+  Writeln ();
 end;
 
-procedure bark_bye;
+procedure bark_t.bye (id:  str);
 begin
-  WriteLn ('Bye to ', g_env.user_id);
-end;
-
-procedure bark_wai_fu (const emoji:  str = '<3');
-{ Wrap her in a gift box }
-begin
-  // Wai-fu (lore url):  en.wikipedia.org/wiki/Konami_Wai_Wai_World
-
-  args_init (g_vars);
-  g_vars[0].id:='Unromance +6';
-
-  arg.id:='ncurses is my bitch';
-  args_pop_e (g_vars, arg);
-
-  arg.id:='scull size -13 in.';
-  args_pop_e (g_vars, arg);
-
-  arg.id:=
-    'The basics are sometimes all you need to look good, in bitchcraft';
-  args_pop_e (g_vars, arg);
-
-  arg.id:='Will you be my wai-foon?';
-  args_pop_e (g_vars, arg);
-
-  arg.id:='Howly moon';
-  args_pop_e (g_vars, arg);
-
-  arg.id:='La li lu le loove <3';
-  args_pop_e (g_vars, arg);
-
-  arg.id:=emoji;
-  args_pop_e (g_vars, arg);
+  WriteLn ('Bye to ', id);
+  Writeln ();
 end;
 
 

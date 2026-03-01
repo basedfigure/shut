@@ -81,7 +81,7 @@ type
     myst:  en.wikipedia.org/wiki/Puzzle_video_game
     navi:  en.wikipedia.org/wiki/Adventure_game
     crpg:  en.wikipedia.org/wiki/Role-playing_video_game
-    term:  en.wikipedia.org/wiki/Roguelike
+    band:  en.wikipedia.org/wiki/Roguelike
     mud:   en.wikipedia.org/wiki/Multi-user_dungeon
     jump:  en.wikipedia.org/wiki/Platformer
     hack:  en.wikipedia.org/wiki/Hack_and_slash
@@ -163,17 +163,20 @@ type
 
 
 
-  proc_str_t = procedure (const arg:  str);
+  proc_arg_t = procedure (const arg:  str);
   proc_oo = procedure of object;
+  proc_arg_oo = procedure (arg:  str) of object;
 
   proc_t = procedure ();
-  proc_sa_t = procedure (const args: array of str);
+  proc_args_t = procedure (const args: array of str);
 
 
 
   // Records & object types
   // wiki.freepascal.org/Record
   // wiki.freepascal.org/Object
+  // wiki.freepascal.org/Programming_Using_Objects
+  // wiki.freepascal.org/Programming_Using_Objects_Page_2
 
 
 
@@ -200,11 +203,11 @@ type
   arg_a = array of arg_t;
 
   proc_a = array of proc_t;
-  proc_af = array [arg_e] of proc_t;
+  proc_af = array [arg_e] of proc_arg_oo;
 
   { url_t }
 
-  http_e = (u_http, u_https);
+  http_e = (_http, _https);
 
   url_t = record
     http:  http_e;
@@ -286,13 +289,13 @@ const
 
   { procs }
 
-  procedure proc_at (e:  arg_e;  p:  proc_t);
+  procedure proc_at (e:  arg_e;  p:  proc_arg_oo);
 
   { (de)bug }
-  procedure de_bark_swe_wc (const a:  array of widechar);
   procedure de_bark_ln (s: str = '');
   procedure de_bark_blk (s: str;  head: str = 'FILL UP';  sym: str = ':');
   procedure de_bark_env (e:  env_t);
+  procedure de_bark_swe_wc (const a:  array of widechar);
 
 
 implementation
@@ -376,11 +379,14 @@ end;
 
 
 
-procedure proc_at (e:  arg_e;  p:  proc_t);
+procedure proc_at (e:  arg_e;  p:  proc_arg_oo);
 begin
   procs[e]:=p;
-  //  call:  proc_at (a_exec, @bark_hey);
-  // ..use procs where and how you want
+  { * init, call:
+    proc_at (a_exec, @bark.hey); // no need to pass arg here to hey
+
+    procs[a_exec](g_env.user_id);
+  }
 end;
 
 
@@ -388,19 +394,6 @@ end;
 { (de)bug }
 
 
-
-procedure de_bark_swe_wc (const a: array of widechar);
-var
-  i: int;
-  s:  UnicodeString;
-begin
-  Writeln ();
-  for i:=Low (a) to High (a) do begin
-    s:=a[i]; // remap
-    Writeln (' Char: ', UTF8Encode (s), ' Code: ', Ord (a[i]));
-  end;
-  Writeln ();
-end;
 
 procedure de_bark_ln (s: str = '');
 begin
@@ -419,6 +412,19 @@ begin
   Writeln ();
   Writeln ('User: ' + e.user_id);
   Writeln ('Term: ' + e.term_id);
+  Writeln ();
+end;
+
+procedure de_bark_swe_wc (const a: array of widechar);
+var
+  i: int;
+  s:  UnicodeString;
+begin
+  Writeln ();
+  for i:=Low (a) to High (a) do begin
+    s:=a[i]; // remap
+    Writeln (' Char: ', UTF8Encode (s), ' Code: ', Ord (a[i]));
+  end;
   Writeln ();
 end;
 
