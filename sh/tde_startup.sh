@@ -25,4 +25,6 @@ konsole -e bash -c "cd /mnt/dump_dsk/CENTR/WRK/_lan/DESK/hat && ls; exec bash" &
 # Open my todo list automatically upon startup. I call it with an alias, if it's
 # closed. Terminal tabs are also good if you lack the screen space (laptops).
 #
-konsole -e bash -c "vim /mnt/dump_dsk/CENTR/WRK/_lan/DESK/todo.txt"
+# The cd is for fuzzbox to list the files based on the DESK directory, it bugs o
+# ut for me otherwise.
+konsole -e bash -c "cd /mnt/dump_dsk/CENTR/WRK/_lan/DESK && vim todo.txt"
