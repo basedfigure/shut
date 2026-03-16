@@ -185,6 +185,9 @@ type
   str  = string;
 
   // ..arrays
+  int_a = array of int;
+  f32_a = array of f32;
+  f64_a = array of f64;
   ch_a  = array of char;
   ch_af = array [0..A_FIXD_N] of char;
   str_a  = array of string;
@@ -243,15 +246,6 @@ type
   proc_a = array of proc_t;
   proc_af = array [arg_e] of proc_arg_oo;
 
-  { url_t }
-
-  http_e = (_http, _https);
-
-  url_t = record
-    http:  http_e;
-    laddr:  str_a;
-  end;
-
   { box_t }
 
   box_t = record
@@ -259,10 +253,35 @@ type
     rat:  f32;
   end;
 
+  { rgba_t }
+
+  rgba_t = record
+    r,g,b,a:  f32;
+  end;
+
   { env_t }
 
   env_t = record
     user_id, term_id:  str;
+  end;
+
+  { virt_view_t }
+
+  virt_view_t = record
+    win:  box_t;
+    bg:  rgba_t;
+    // mouse
+    has_rmb_look:  bool;
+    curs_move_rate:  single;
+  end;
+
+  { url_t - move:  netutil }
+
+  http_e = (_http, _https);
+
+  url_t = record
+    http:  http_e;
+    laddr:  str_a;
   end;
 
 
