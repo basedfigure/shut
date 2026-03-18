@@ -328,6 +328,8 @@ var
   // ..pointers
   pa:  poi_a;
 
+  g_view:  virt_view_t;
+
 
 const
     // ..(mem)ory arena
