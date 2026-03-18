@@ -2,7 +2,13 @@ unit jujuinfo;
 
 {$mode ObjFPC}{$H+}
 
+
+
 interface
+
+// * Guideposts:
+// codeberg.org/basedfigure/foot
+// laz/menu/
 
 { * Style guide (e.g):
 Abbreviate block to blk, when you don't mean a memory block (mem), but to mean
@@ -84,8 +90,10 @@ or..
 
 * Programming styles:
 X) Librarian
-X) Preservative
+X) Preservist
+X) Designer
 X) Productionista
+X) Architect
 
 Some of this may set you on the right path, some may set me on the right path.
 Picking up the pace.
