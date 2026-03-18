@@ -98,11 +98,14 @@ type
      9. beat:  en.wikipedia.org/wiki/Beat_'em_up
     10. gun:   en.wikipedia.org/wiki/Shooter_game
     11. hell:  en.wikipedia.org/wiki/Shoot_'em_up
-    12. vs:    en.wikipedia.org/wiki/Fighting_game
+    12. fray:  en.wikipedia.org/wiki/Fighting_game
+               en.wikipedia.org/wiki/Platform_fighter
+    13. life:  en.wikipedia.org/wiki/Life_simulation_game
+    14. rts:   en.wikipedia.org/wiki/Real-time_strategy_game
 
      1) en.wikipedia.org/wiki/Tetris
      2) en.wikipedia.org/wiki/Deus_Ex_(video_game)
-     3) en.wikipedia.org/wiki/Final_Fantasy_VIII
+     3) en.wikipedia.org/wiki/The_Elder_Scrolls_III:_Morrowind
      4) en.wikipedia.org/wiki/Cogmind
      5) www.zuggsoft.com/index.php
      6) en.wikipedia.org/wiki/Commandos:_Behind_Enemy_Lines
@@ -112,22 +115,36 @@ type
     10) en.wikipedia.org/wiki/Brothers_in_Arms_(video_game_series)
     11) en.wikipedia.org/wiki/Vampire_Survivors
     12) en.wikipedia.org/wiki/Street_Fighter_Alpha_3
+        en.wikipedia.org/wiki/Dynasty_Warriors_5
+    13) en.wikipedia.org/wiki/The_Sims
+    14) en.wikipedia.org/wiki/StarCraft_(video_game)
 
     * Special mentions to:
     en.wikipedia.org/wiki/The_Legend_of_Zelda:_A_Link_to_the_Past
     en.wikipedia.org/wiki/The_Legend_of_Zelda:_Ocarina_of_Time
     en.wikipedia.org/wiki/Fallout_2
     en.wikipedia.org/wiki/Final_Fantasy_VII
+    en.wikipedia.org/wiki/Final_Fantasy_VIII
     en.wikipedia.org/wiki/Final_Fantasy_IX
     en.wikipedia.org/wiki/Final_Fantasy_X
     en.wikipedia.org/wiki/Tom_Clancy's_Rainbow_Six
     en.wikipedia.org/wiki/Call_of_Duty_4:_Modern_Warfare
     en.wikipedia.org/wiki/Dark_Souls_(video_game)
     en.wikipedia.org/wiki/Darkwood
+    en.wikipedia.org/wiki/Quake_(video_game)
+    en.wikipedia.org/wiki/Quake_III_Arena
     stoneshard.com/wiki/Stoneshard_Wiki
 
-    * My favorite game (quirkily perfect):
-    en.wikipedia.org/wiki/Vagrant_Story
+    * My favorite games (quirkily perfect):
+    wrpg:  en.wikipedia.org/wiki/The_Elder_Scrolls_II:_Daggerfall
+    trpg:  en.wikipedia.org/wiki/Vagrant_Story
+    wrpg:  en.wikipedia.org/wiki/The_Elder_Scrolls_III:_Morrowind
+
+    Demold:  foot
+    wrpg = western rpg,  immersive/freeform (also:  crpg)
+    trpg = tactical rpg, immersive/systematic (also:  crpg/jrpg)
+
+    immersive = emergent, mood, story
   }
 
 
@@ -271,7 +288,7 @@ type
     win:  box_t;
     bg:  rgba_t;
     // mouse
-    has_rmb_look:  bool;
+    curs_has_rmb_look:  bool;
     curs_move_rate:  single;
   end;
 
@@ -357,6 +374,10 @@ const
 
 
 implementation
+
+
+
+{ (bit)shf }
 
 
 
