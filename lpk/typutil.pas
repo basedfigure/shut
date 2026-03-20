@@ -263,33 +263,41 @@ const
     mem:  memory arena (mem)
     navi:  fog of war (fog),  culling (cull),  line of sight (los)
     draw:  OpenGL (gl),  viewport (port)
-    math:  unit2d, unit3d
-    sim:  convex (hull), bodies (mass), geo (hit), space (grav), cloth (garb)
+    math:  unit2d, unit3d, unitmath
+    sim:  geo (hit), bodies (mass), convex (hull), space (grav), cloth (garb)
+    key:  keyboard (keeb),  game (pad),  joystick (joy)
     bass:  OpenAL (al),  Vorbis (ogg),  Waveform (wav)
     ai:   brain/behavior (psy),  pathfinding (path)
     ...
 
     * Utilities & apps (suffixes):
-    tui:  cli
+    tui:  ncurses (nc), command line (cli)
 
 
     * wiki:
-    tui:
-    en.wikipedia.org/wiki/Ncurses
+    nc:  en.wikipedia.org/wiki/Ncurses
 
     gui:
-    en.wikipedia.org/wiki/Free_Pascal_Runtime_Library
-    en.wikipedia.org/wiki/Free_Component_Library
-    en.wikipedia.org/wiki/Lazarus_Component_Library
+    rtl:  en.wikipedia.org/wiki/Free_Pascal_Runtime_Library
+    fcl:  en.wikipedia.org/wiki/Free_Component_Library
+    lcl:  en.wikipedia.org/wiki/Lazarus_Component_Library
 
     draw (gpu):
-    en.wikipedia.org/wiki/OpenGL
-    en.wikipedia.org/wiki/Vulkan (vk)
+    gl:  en.wikipedia.org/wiki/OpenGL
+    vk:  en.wikipedia.org/wiki/Vulkan
+
+    sim:
+    hit:   en.wikipedia.org/wiki/Bounding_volume
+           en.wikipedia.org/wiki/Minimum_bounding_box
+    mass:  en.wikipedia.org/wiki/Rigid_body
+           en.wikipedia.org/wiki/Rigid_body_dynamics
+    hull:  en.wikipedia.org/wiki/Convex_hull
 
     bass:
-    en.wikipedia.org/wiki/MIDI
-    en.wikipedia.org/wiki/WAV
-    en.wikipedia.org/wiki/Vorbis
+    al:    en.wikipedia.org/wiki/OpenAL
+    midi:  en.wikipedia.org/wiki/MIDI
+    wav:  en.wikipedia.org/wiki/WAV
+    ogg:  en.wikipedia.org/wiki/Vorbis
   }
 
 
@@ -316,7 +324,9 @@ const
   procedure de_bark_env (e:  env_t);
   procedure de_bark_swe_wc (const a:  array of widechar);
 
+  { (rgba) color }
 
+  function rgba_from_hex (const hex:  cardinal):  rgba_t;
 implementation
 
 
