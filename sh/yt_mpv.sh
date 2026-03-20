@@ -28,6 +28,7 @@ usage() {
   echo "  "
   echo "  # ware:"
   echo "  8bitguy"
+  echo "  savage"
   echo "  "
   echo "  # play:"
   echo "  mattchat"
@@ -35,6 +36,7 @@ usage() {
   echo "  retku2"
   echo "  tmr"
   echo "  vinc"
+  echo "  jwong"
   echo "  "
   echo "  # trig:"
   echo "  berlin"
@@ -44,6 +46,7 @@ usage() {
   echo "  bungalow"
   echo "  abigail"
   echo "  risa"
+  echi "  maya"
   echo "  "
   echo "  # poli:"
   echo "  johnnyharris"
@@ -88,6 +91,9 @@ case "$1" in
   8bitguy)
     mpv https://www.youtube.com/@The8BitGuy/videos
     ;;
+  savage)
+    mpv https://www.youtube.com/@tested/videos
+    ;;
 
   # play:
   mattchat)
@@ -104,6 +110,9 @@ case "$1" in
     ;;
   vinc)
     mpv https://www.youtube.com/@davidvinc/videos
+    ;;
+  jwong)
+    mpv https://www.youtube.com/@jwonggg
     ;;
 
   # trig:
@@ -127,6 +136,9 @@ case "$1" in
     ;;
   risa)
     mpv https://www.youtube.com/@TheRisaASMR/videos
+    ;;
+  maya)
+    mpv https://www.youtube.com/@AlsoMayaASMR
     ;;
 
   # poli:
