@@ -3,12 +3,21 @@ unit typmisc;
 {$mode ObjFPC}{$H+}
 {$DEFINE TWO_CHAR_EMOJI} // fpc -dTWO_CHAR_EMOJI
 
+// Advanced records
+// forum.lazarus.freepascal.org/index.php?topic=61682.0
+
 interface
 
 uses
   Classes, SysUtils;
 
 const
+  // Colors
+  HEX_RGBA_BLACK:   cardinal = $000000;
+  HEX_RGBA_WHITE:   cardinal = $FFFFFF;
+  HEX_RGBA_GRAY:    cardinal = $999999;
+  HEX_RGBA_MORROW:  cardinal = $733F0F;
+
   // ..ASCII emojis:  en.wikipedia.org/wiki/List_of_emoticons
   {$IFDEF TWO_CHAR_EMOJI}
     SMILE_MOJ = ':)';

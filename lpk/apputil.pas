@@ -5,7 +5,7 @@ unit apputil;
 interface
 
 uses
-  Classes, SysUtils, process,
+  Classes, SysUtils, process, ExtCtrls,
   ncurses,
   // Juju:
   typutil, ncutil, barkutil;
@@ -28,6 +28,9 @@ const
 var
   // Global variables
   g_env:  env_t;
+  g_view:  virt_view_t;
+  // ..instances
+  g_time:  TTimer;
 
 implementation
 
@@ -72,6 +75,11 @@ begin
 
      if (nc_on_ln >= 0) and (nc_on_ln <= High (g_vars)) then begin
 
+       // tui:  command line box at the top of the console
+       //
+       // opt 1:  tree of barks/bark_wai_fu
+       // opt 2:  git workspace
+
      end;
 
     end;
@@ -104,7 +112,10 @@ end;
 
 procedure run_cli_nc (const args:  arg_a);
 begin
-
+  // move run_cli nc here
+  // - g_vars for globs
+  // - args
+  // run_cli - commented out code
 end;
 
 procedure exec_app (const path: str);

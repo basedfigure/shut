@@ -1,4 +1,4 @@
-unit typutil;  // misc
+unit typutil;  // main
 
 {$mode ObjFPC}{$H+}
 // wiki.freepascal.org/Compiler_Mode
@@ -29,7 +29,7 @@ interface
 uses
   Classes, SysUtils,
   // Juju:
-  typmisc;
+  typmisc, jujuinfo;
 
 const
     // Source code (git):
@@ -55,98 +55,8 @@ type
    p_juju,  // 1)
    p_dojo,  // 2)
    p_hood); // 3)
-
-  { * Roughly,
-    1) Juju has the console, so it serves as the engine.
-
-    2) Dojo has the game mechanics, with my demo roguelike named dojoband.pas, t
-    o serve as a TUI roguelike/adventure demo, to use with Juju. The reason to d
-    o a game like this is to get to the essence of text-based adventure games an
-    d roguelikes, both of which use ASCII "graphics", where both marry the stats
-    and text -- programming wise and game wise. Here both projects become relati
-    vely quick to test, so as to get any chinks out of the way early. I also lov
-    e those genres, where they're never really used together. They have a lot of
-    untapped potential, especially for the backroom codist.
-
-    3) Hood is a graphics library for developing with 2D/3D graphics, but is aim
-    ed at just supporting what you need in your specific game right now, instead
-    of any latest formats or rendering techniques. I commend any library authors
-    for trying to stay up with everything!
-
-    * Routine style guide:
-    dojoband draws the ASCII graphics with ncurses, so they're suffixed with _nc
-    and every rogue routine is prefixed band_ so you get "band_draw_nc (glyph)"
-
-    * The ecosystem aims to support text, 2d, 3d and their hybridization.
-
-    * By complexity level:  wiki
-    - TXT/TUI:  juju
-    puzzle, adventure, crpg, roguelike, mud,
-
-    - 2D/2.5D/3D/GUI:  juju, hood
-    platformer, hack n' slash, shooter, fighter
-
-    * wiki, e.g:  by mech/mood
-     1. myst:  en.wikipedia.org/wiki/Puzzle_video_game
-     2. navi:  en.wikipedia.org/wiki/Adventure_game
-     3. crpg:  en.wikipedia.org/wiki/Role-playing_video_game
-     4. band:  en.wikipedia.org/wiki/Roguelike
-     5. mud:   en.wikipedia.org/wiki/Multi-user_dungeon
-     6. tact:  en.wikipedia.org/wiki/Strategy_video_game
-     7. jump:  en.wikipedia.org/wiki/Platformer
-     8. hack:  en.wikipedia.org/wiki/Hack_and_slash
-     9. beat:  en.wikipedia.org/wiki/Beat_'em_up
-    10. gun:   en.wikipedia.org/wiki/Shooter_game
-    11. hell:  en.wikipedia.org/wiki/Shoot_'em_up
-    12. fray:  en.wikipedia.org/wiki/Fighting_game
-               en.wikipedia.org/wiki/Platform_fighter
-    13. life:  en.wikipedia.org/wiki/Life_simulation_game
-    14. rts:   en.wikipedia.org/wiki/Real-time_strategy_game
-
-     1) en.wikipedia.org/wiki/Tetris
-     2) en.wikipedia.org/wiki/Deus_Ex_(video_game)
-     3) en.wikipedia.org/wiki/The_Elder_Scrolls_III:_Morrowind
-     4) en.wikipedia.org/wiki/Cogmind
-     5) www.zuggsoft.com/index.php
-     6) en.wikipedia.org/wiki/Commandos:_Behind_Enemy_Lines
-     7) en.wikipedia.org/wiki/Donkey_Kong_Country_2
-     8) en.wikipedia.org/wiki/Diablo_II:_Lord_of_Destruction
-     9) en.wikipedia.org/wiki/Ehrgeiz
-    10) en.wikipedia.org/wiki/Brothers_in_Arms_(video_game_series)
-    11) en.wikipedia.org/wiki/Vampire_Survivors
-    12) en.wikipedia.org/wiki/Street_Fighter_Alpha_3
-        en.wikipedia.org/wiki/Dynasty_Warriors_5
-    13) en.wikipedia.org/wiki/The_Sims
-    14) en.wikipedia.org/wiki/StarCraft_(video_game)
-
-    * Special mentions to:
-    en.wikipedia.org/wiki/The_Legend_of_Zelda:_A_Link_to_the_Past
-    en.wikipedia.org/wiki/The_Legend_of_Zelda:_Ocarina_of_Time
-    en.wikipedia.org/wiki/Fallout_2
-    en.wikipedia.org/wiki/Final_Fantasy_VII
-    en.wikipedia.org/wiki/Final_Fantasy_VIII
-    en.wikipedia.org/wiki/Final_Fantasy_IX
-    en.wikipedia.org/wiki/Final_Fantasy_X
-    en.wikipedia.org/wiki/Tom_Clancy's_Rainbow_Six
-    en.wikipedia.org/wiki/Call_of_Duty_4:_Modern_Warfare
-    en.wikipedia.org/wiki/Dark_Souls_(video_game)
-    en.wikipedia.org/wiki/Darkwood
-    en.wikipedia.org/wiki/Quake_(video_game)
-    en.wikipedia.org/wiki/Quake_III_Arena
-    stoneshard.com/wiki/Stoneshard_Wiki
-
-    * My favorite games (quirkily perfect):
-    wrpg:  en.wikipedia.org/wiki/The_Elder_Scrolls_II:_Daggerfall
-    trpg:  en.wikipedia.org/wiki/Vagrant_Story
-    wrpg:  en.wikipedia.org/wiki/The_Elder_Scrolls_III:_Morrowind
-
-    Demold:  foot
-    wrpg = western rpg,  immersive/freeform (also:  crpg)
-    trpg = tactical rpg, immersive/systematic (also:  crpg/jrpg)
-
-    immersive = emergent, mood, story
-  }
-
+   { jujuinfo has more on the ecosystem and games, in general.
+      - (do):  console print, to informally "formalize" them, to some capacity.}
 
 
   // Type aliasing
@@ -349,6 +259,12 @@ const
 
   // Routines
 
+  { (sub)routines (prefixes):  by algo, data
+    mem:  memory arena (mem)
+    navi:  fog of war (fog),  culling (cull),  line of sight (los)
+    ai:   brain/behavior (psy),  pathfinding (path)
+    ...
+  }
 
 
   { (mem)ory arena }
@@ -379,7 +295,7 @@ implementation
 
 
 
-{ (bit)shf }
+{ (bit)shift }
 
 
 
@@ -507,6 +423,22 @@ begin
     Writeln (' Char: ', UTF8Encode (s), ' Code: ', Ord (a[i]));
   end;
   Writeln ();
+end;
+
+
+
+{ (rgba) color }
+
+
+
+function rgba_from_hex (const hex:  cardinal):  rgba_t;
+begin
+  with result do begin
+    r:=((hex shr 16) and $FF) / 255.0;
+    g:=((hex shr 8) and $FF) / 255.0;
+    b:=(hex and $ff) / 255.0;
+    a:=0.0;
+  end;
 end;
 
 end.
