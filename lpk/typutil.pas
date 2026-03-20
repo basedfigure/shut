@@ -259,11 +259,37 @@ const
 
   // Routines
 
-  { (sub)routines (prefixes):  by algo, data
+  { * (Sub)routines (prefixes):  by algo, tech, data
     mem:  memory arena (mem)
     navi:  fog of war (fog),  culling (cull),  line of sight (los)
+    draw:  OpenGL (gl),  viewport (port)
+    math:  unit2d, unit3d
+    sim:  convex (hull), bodies (mass), geo (hit), space (grav), cloth (garb)
+    bass:  OpenAL (al),  Vorbis (ogg),  Waveform (wav)
     ai:   brain/behavior (psy),  pathfinding (path)
     ...
+
+    * Utilities & apps (suffixes):
+    tui:  cli
+
+
+    * wiki:
+    tui:
+    en.wikipedia.org/wiki/Ncurses
+
+    gui:
+    en.wikipedia.org/wiki/Free_Pascal_Runtime_Library
+    en.wikipedia.org/wiki/Free_Component_Library
+    en.wikipedia.org/wiki/Lazarus_Component_Library
+
+    draw (gpu):
+    en.wikipedia.org/wiki/OpenGL
+    en.wikipedia.org/wiki/Vulkan (vk)
+
+    bass:
+    en.wikipedia.org/wiki/MIDI
+    en.wikipedia.org/wiki/WAV
+    en.wikipedia.org/wiki/Vorbis
   }
 
 
