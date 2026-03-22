@@ -2,6 +2,10 @@
 
 # Calls a porcelain 'git status' command, for all repos, so i can see what i was
 #working on, from their staging areas, so i don't have to do them one by one.
+#
+# Screenshot (url):
+# codeberg.org/basedfigure/foot/media/branch/main/dojo/juju_git_dump_stat_sh.png
+#
 
 # Dry:
 root="/mnt/dump_dsk/CENTR/WRK"
