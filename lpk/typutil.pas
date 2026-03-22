@@ -259,32 +259,63 @@ const
 
   // Routines
 
-  { * (Sub)routines (prefixes):  by algo, tech, data
-    mem:  memory arena (mem)
-    navi:  fog of war (fog),  culling (cull),  line of sight (los)
-    draw:  OpenGL (gl),  viewport (port)
-    math:  unit2d, unit3d, unitmath
-    sim:  geo (hit), bodies (mass), convex (hull), space (grav), cloth (garb)
-    key:  keyboard (keeb),  game (pad),  joystick (joy)
+  { * (Sub)routines (prefixes):  sys, by data, algo, tech
+    # unit/code:  id
+
+    root:  message (bark),  dialogue (tree),  container (cont)
+    mem:   memory arena (mem),
+    run:   instance (ego),  triggers (trig),  projectiles (ammo), effects (fx)
+
+    kit:   keyboard (keeb),  game (pad),  joystick (joy)
     bass:  OpenAL (al),  Vorbis (ogg),  Waveform (wav)
-    ai:   brain/behavior (psy),  pathfinding (path)
-    ...
+
+    math:  unit2d, unit3d, unitmod, unitmath, vectors (xyz), matrices (m16) ...
+    draw:  OpenGL (gl),  viewport (port),  lighting (lamp),  shadows (dark)
+    fmt:   art (mod),  fig (mod)
+    bone:  armature (arma),  skinning (skin),  animation (cut)
+    sim:   geo (hit), bodies (mass), convex (hull), space (grav), cloth (garb)
+    area:  exterior (zone),  indoors (door)
+    navi:  fog of war (fog),  culling (cull),  line of sight (los)
+    ai:    brain/behavior (psy),  pathfinding (path)
+    ;;
+
+    ; code:  by part
+    mech_vs_
+     or..
+    syst_vs_
+     and..
+    game_vs_
+
+
+    like..
+
+    band_vs_law_do_give_up_arm_upon (ban:  depo_s)
+     and..
+    de_band_dump_ego (e:ego_e;  r:role_e;  f:flag_e):  int;
+    ;;
+
 
     * Utilities & apps (suffixes):
-    tui:  ncurses (nc), command line (cli)
+    util:  tui/gui utility (small program)
 
+    tui:  ncurses (nc), command line (cli)
+    util:  map editor (area),  instance editor (ego),  exporter (save),
+           importer (load)
 
     * wiki:
-    nc:  en.wikipedia.org/wiki/Ncurses
+    nc:    en.wikipedia.org/wiki/Ncurses
 
     gui:
-    rtl:  en.wikipedia.org/wiki/Free_Pascal_Runtime_Library
-    fcl:  en.wikipedia.org/wiki/Free_Component_Library
-    lcl:  en.wikipedia.org/wiki/Lazarus_Component_Library
+    rtl:   en.wikipedia.org/wiki/Free_Pascal_Runtime_Library
+    fcl:   en.wikipedia.org/wiki/Free_Component_Library
+    lcl:   en.wikipedia.org/wiki/Lazarus_Component_Library
 
     draw (gpu):
-    gl:  en.wikipedia.org/wiki/OpenGL
-    vk:  en.wikipedia.org/wiki/Vulkan
+    gl:    en.wikipedia.org/wiki/OpenGL
+    vk:    en.wikipedia.org/wiki/Vulkan
+
+    math:
+    quat:  quaternion
 
     sim:
     hit:   en.wikipedia.org/wiki/Bounding_volume
@@ -296,8 +327,8 @@ const
     bass:
     al:    en.wikipedia.org/wiki/OpenAL
     midi:  en.wikipedia.org/wiki/MIDI
-    wav:  en.wikipedia.org/wiki/WAV
-    ogg:  en.wikipedia.org/wiki/Vorbis
+    wav:   en.wikipedia.org/wiki/WAV
+    ogg:   en.wikipedia.org/wiki/Vorbis
   }
 
 
