@@ -19,7 +19,7 @@
 #
 # https://github.com/basedfigure/juju/blob/main/sh/git_auto_commit_desk.sh
 #
-konsole -e bash -c "cd /mnt/dump_dsk/CENTR/WRK/_lan/DESK/hat && ls; exec bash" &
+konsole -e bash -c "cd /mnt/dump_dsk/CENTR/WRK/_lan/DESK/do/hat && ls; exec bash" &
 
 
 # Open my todo list automatically upon startup. I call it with an alias, if it's
@@ -27,4 +27,18 @@ konsole -e bash -c "cd /mnt/dump_dsk/CENTR/WRK/_lan/DESK/hat && ls; exec bash" &
 #
 # The cd is for fuzzbox to list the files based on the DESK directory, it bugs o
 # ut for me otherwise.
-konsole -e bash -c "cd /mnt/dump_dsk/CENTR/WRK/_lan/DESK && vim todo.txt"
+konsole -e bash -c "cd /mnt/dump_dsk/CENTR/WRK/_lan/DESK/ && vim todo.txt"
+
+# DESK/ - Konsole pathing:
+# do/
+#  - hat/ now/ safe/ stat/
+# * hat/  root/*, home/ side/ misc/
+# * stat/ is for what my console looks for with:  todo
+# fr_tpad/
+# word/
+#  - done/
+#
+# I have a super easy and powerful technique for creating todo files here (url):
+# github.com/basedfigure/juju/blob/main/sh/todo.sh
+# - Screenshot:
+# codeberg.org/basedfigure/foot/media/branch/main/dojo/juju_todo_bash.png
