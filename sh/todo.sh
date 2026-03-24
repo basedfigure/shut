@@ -1,5 +1,8 @@
-#!/bin/sh
+#!/bin/bash
+# bash instead of sh, for todo () in bashrc
 
+# todo = Spanish for all, English for to-do.
+#
 # how:  jump down
 #
 # 1) This is a great system for the lone one and for team work, because agnostic
@@ -30,7 +33,20 @@
 # or..
 # $ source ~/.bashrc
 #
-# Usage:  how
+#
+# * Usage:  how
+# Commands, flags & arguments:
+#
+# - Add new todo/entry into stat/:
+# $ todo -f "FILE" "content"
+#
+# - Search text in TODO_DIRS.
+# $ todo -a text
+#
+# - Dump of empty/nonempty files.
+# $ todo -l empty or.. nonempty
+#
+#
 #$ todo -f "band of wives.txt" "append this line to it, even if the file exists"
 #
 # Why:
@@ -49,9 +65,15 @@
 #
 
 
-TODO_DIR="/mnt/dump_dsk/CENTR/WRK/_lan/DESK/do/stat"
+ROOT_DIR="/mnt/dump_dsk/CENTR/WRK/_lan/DESK/do/"
+TODO_DIR="$ROOT_DIR/stat" # Konsole based entries go here
 
-echo
+declare -A TODO_DIRS=(
+  #[hat]="$ROOT_DIR/hat"
+  #[now]="$ROOT_DIR/now"
+  #[safe]="$ROOT_DIR/safe"
+  [word]="/mnt/dump_dsk/CENTR/WRK/_lan/DESK/word"
+)
 
 if [ "$1" = "-f" ]; then
   FILE="$2"
@@ -71,6 +93,51 @@ if [ "$1" = "-f" ]; then
 
   echo "- $TODO_TEXT" >> "$TODO_DIR/$FILE"
   echo "Following appended to file:  $FILE"
+
+# Word search:
+elif [ "$1" = "-a" ]; then
+  shift
+
+  if [ -z "$*" ]; then
+    echo "Input search text"
+    exit 1
+  fi
+
+  for DIR in "${TODO_DIRS[@]}"; do
+
+    echo
+    echo "$DIR:"
+
+    grep --color=always -Rn "$*" "$DIR" | awk -v prefix="$DIR/" '{sub(prefix,""); print}'
+
+  done
+
+# Dump of empty/nonempty files:
+elif [ "$1" = "-l" ]; then
+  MODE="$2"
+
+  if [ -z "$MODE" ]; then
+    echo "Use: -l empty | nonempty"
+    exit 1
+  fi
+
+  for DIR in "${TODO_DIRS[@]}"; do
+
+    echo
+    echo "$DIR:"
+
+    if [ "$MODE" = "empty" ]; then
+      find "$DIR" -type f -empty -printf " %f\n"
+
+    elif [ "$MODE" = "nonempty" ]; then
+      find "$DIR" -type f ! -empty -printf " %f\n"
+
+    else
+      echo "Use: empty or nonempty"
+      exit 1
+    fi
+
+  done
 
 else
   cd "$TODO_DIR" || exit 1
