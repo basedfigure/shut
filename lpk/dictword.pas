@@ -4,7 +4,7 @@ ladies, with and without pantaloons. }
 
 { * Dictionary:
 
-* Words:  size, init
+* Words:  wide, init
 A) able, ass
 B) bag, bane, bark, boon, bore, buff, buzz
 C) cat, core, cult, cold

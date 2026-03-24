@@ -300,7 +300,7 @@ const
 
     tui:  ncurses (nc), command line (cli)
     util:  map editor (area),  instance editor (ego),  exporter (save),
-           importer (load)
+           importer (load),  installer (inst),  wizard (wiz)
 
     * wiki:
     nc:    en.wikipedia.org/wiki/Ncurses
