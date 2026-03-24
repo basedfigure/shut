@@ -69,9 +69,9 @@ ROOT_DIR="/mnt/dump_dsk/CENTR/WRK/_lan/DESK/do/"
 TODO_DIR="$ROOT_DIR/stat" # Konsole based entries go here
 
 declare -A TODO_DIRS=(
-  #[hat]="$ROOT_DIR/hat"
-  #[now]="$ROOT_DIR/now"
-  #[safe]="$ROOT_DIR/safe"
+  [hat]="$ROOT_DIR/hat"
+  [now]="$ROOT_DIR/now"
+  [safe]="$ROOT_DIR/safe"
   [word]="/mnt/dump_dsk/CENTR/WRK/_lan/DESK/word"
 )
 
