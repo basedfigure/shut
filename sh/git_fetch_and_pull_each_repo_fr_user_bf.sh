@@ -4,14 +4,24 @@
 # * Auto complete by hitting tab, until you get the full file name and pick a nu
 #   mber for the command, to show that many commits in the dump.
 #
-# $ git_fetch_and_pull_each_repo_fr_user_bf 16
+# $ git_fetch_and_pull_each_repo_fr_user_bf 16  or.. 4 dojo juju hood
 # - Press ENTER to scroll with the pager, or q to quit. Scroll normally after it
 
 set -euo pipefail
 
 DEST_DIR="${DEST_DIR:-./repos}"
 
-N_COMMITS="${1:-5}"
+N_COMMITS=5
+TARGET_REPOS=()
+
+if [[ $# -ge 1 ]]; then
+  if [[ "$1" =~ ^[0-9]+$ ]]; then
+    N_COMMITS="$1"
+    shift
+  fi
+    TARGET_REPOS=("$@")
+fi
+
 
 declare -A REPOS=(
   [juju]="github.com/basedfigure/juju"
@@ -51,14 +61,32 @@ bark_log () {
   echo ";--------------------------------------;"
 
   git -C "$repo_dir" log -n "$N_COMMITS" \
-    --pretty=format:'%C(bold magenta)%h%Creset %C(cyan)%ad%Creset%n  %C(yellow)%s%Creset%n  %C(green)by %an%Creset%n' --date=relative || echo "no commits"
+    --pretty=format:'%C(bold magenta)%h%Creset %C(cyan)%ad%Creset%n  %C(yellow)%s%Creset%n  %C(green)by %an%Creset%n' \
+    --date=relative || echo "no commits"
 
   echo
 }
 
 mkdir -p "$DEST_DIR"
 
-for repo in "${!REPOS[@]}"; do
+if [[ ${#TARGET_REPOS[@]} -gt 0 ]]; then
+  repos_to_process=()
+
+  for r in "${TARGET_REPOS[@]}"; do
+
+    if [[ -z "${REPOS[$r]+x}" ]]; then
+      echo "Unknown repo:  $r"
+      echo "Available: ${!REPOS[*]}"
+      exit 1
+    fi
+    repos_to_process+=("$r")
+  done
+else
+  repos_to_process=("${!REPOS[@]}")
+fi
+
+
+for repo in "${repos_to_process[@]}"; do
   raw_url="${REPOS[$repo]}"
   git_url=$(norm_git_url "$raw_url")
 
@@ -73,5 +101,5 @@ for repo in "${!REPOS[@]}"; do
   fi
 
   bark_log "$target" "$repo"
-echo
+  echo
 done
