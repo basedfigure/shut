@@ -40,8 +40,15 @@
 # - Add new todo/entry into stat/:
 # $ todo -f "FILE" "content"
 #
+# - Search file by name from TODO_DIRS.
+# $ todo -fn word
+#
 # - Search text in TODO_DIRS.
 # $ todo -a text
+#
+# - Fuzzy search file + text in TODO_DIR(S). Read interactivity notes here
+# : fzf+todo
+# $ todo -fzf text
 #
 # - Dump of empty/nonempty files.
 # $ todo -l empty or.. nonempty
@@ -94,7 +101,40 @@ if [ "$1" = "-f" ]; then
   echo "- $TODO_TEXT" >> "$TODO_DIR/$FILE"
   echo "Following appended to file:  $FILE"
 
-# Word search:
+
+# * File name search in TODO_DIR(S), with fzf (fuzzy finder),
+# so you can search any pattern of letters and words, lightning fast:
+#
+# Install (apt):  fzf
+# - utility
+#
+elif [ "$1" = "-fn" ]; then
+  shift
+
+  if [ -z "$*" ]; then
+    echo "Input filename search text"
+    exit 1
+  fi
+
+  SEARCH="$*"
+
+  if [ -d "$TODO_DIR" ]; then
+    echo
+    echo "$TODO_DIR:"
+    find "$TODO_DIR" -type f -printf "%f\n" | fzf --filter="$SEARCH" --no-sort --exact
+  fi
+
+  for DIR in "${TODO_DIRS[@]}"; do
+    if [ -d "$DIR" ]; then
+      echo
+      echo "$DIR:"
+      find "$DIR" -type f -printf "%f\n" | fzf --filter="$SEARCH" --no-sort --exact
+    fi
+  done
+
+
+
+# Word search, with color coding:  grep
 elif [ "$1" = "-a" ]; then
   shift
 
@@ -112,7 +152,87 @@ elif [ "$1" = "-a" ]; then
 
   done
 
-# Dump of empty/nonempty files:
+
+# * Fuzzy file + word search, interactively, inside all the given dirs
+# : fzf+todo
+# Install (apt):  $ sudo apt install fzf
+#
+# FZF + todo.sh:
+# - color coded output.
+# - search interactively, after initial search, in FZFs CLI.
+# - interactive line selection, with up/down arrows.
+# - open the selected line, by line number, in Vim, by Enter.
+# 
+# Screenshot (url):
+# codeberg.org/basedfigure/foot/media/branch/main/dojo/
+# @
+# juju_todo_bash_and_fzf_in_cli.png
+# juju_todo_bash_and_fzf_in_cli_2_open_line_in_vim_upon_ret_key.png
+#
+elif [ "$1" = "-fzf" ]; then
+  shift
+
+  if [ $# -eq 0 ]; then
+    echo "Input search text"
+    exit 1
+  fi
+
+  SEARCH="$*"
+  SEARCH_WORDS=("$@")
+  ROOT_PREFIX="$ROOT_DIR"
+  EDITOR_CMD="${EDITOR:-vim}"
+
+  ALL_LINES=""
+
+  get_lines() {
+    local DIR="$1"
+    find "$DIR" -type f | while read -r FILE; do
+      awk -v root="$ROOT_PREFIX" -v f="$FILE" '
+        {
+          path = f
+          sub("^" root "/", "", path)
+          print path ":" FNR ":" $0
+        }' "$FILE"
+    done
+  }
+
+for DIR in "$TODO_DIR" "${TODO_DIRS[@]}"; do
+  if [ -d "$DIR" ]; then
+    ALL_LINES+=$(get_lines "$DIR")
+    ALL_LINES+=$'\n'
+  fi
+done
+
+FILTERED=$(awk -v words="${SEARCH_WORDS[*]}" '
+  BEGIN { n = split(words, w, " ") }
+  {
+     match_all = 1
+     for(i=1;i<=n;i++){
+       if(index(tolower($0), tolower(w[i]))==0){
+         match_all = 0
+         break
+       }
+     }
+     if(match_all) print
+  }' <<< "$ALL_LINES")
+
+  if [ -n "$FILTERED" ]; then
+    SELECTED=$(echo "$FILTERED" | fzf --ansi --query="$SEARCH" --prompt="Search> ")
+
+    if [ -n "$SELECTED" ]; then
+      FILEPATH="${SELECTED%%:*}"
+      LINE_NUM="${SELECTED#*:}"
+      LINE_NUM="${LINE_NUM%%:*}"
+
+      $EDITOR_CMD "+$LINE_NUM" "$ROOT_PREFIX/$FILEPATH"
+    fi
+  else
+    echo "No matches found"
+  fi
+
+
+
+# * Dump of empty/nonempty files:
 elif [ "$1" = "-l" ]; then
   MODE="$2"
 
