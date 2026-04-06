@@ -1,7 +1,10 @@
 https://pinterest.com/basedfigure/osr/
+https://pinterest.com/basedfigure/gui/
+
 https://pinterest.com/basedfigure/2d_fig/
-https://pinterest.com/basedfigure/2d_mass_ai/
+https://pinterest.com/basedfigure/2d_wall_art/
 https://pinterest.com/basedfigure/2d_and_3d_tex/
+https://pinterest.com/basedfigure/2d_mass_ai/
 
 https://pinterest.com/basedfigure/3d_tech/
 https://pinterest.com/basedfigure/3d_wire/
@@ -10,5 +13,10 @@ https://pinterest.com/basedfigure/3d_wear/
 https://pinterest.com/basedfigure/3d_fig/
 https://pinterest.com/basedfigure/3d_misc/
 https://pinterest.com/basedfigure/3d_doll/
+
+https://pinterest.com/basedfigure/2d_game/
+https://pinterest.com/basedfigure/2d_game_idea/
+https://pinterest.com/basedfigure/25d_game/
+https://pinterest.com/basedfigure/3d_game/
 
 https://pinterest.com/basedfigure/_pins/
