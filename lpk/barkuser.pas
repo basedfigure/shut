@@ -10,7 +10,7 @@ interface
 uses
   Classes, SysUtils,
   // Juju:
-  typutil;
+  typutil, barkutil;
 
 type
 
@@ -65,13 +65,15 @@ type
   // en.wikipedia.org/wiki/Familiar
   procedure bark_dog (const s:  str = 'woof');
   procedure bark_goat (const s:  str = 'hoof');
-  procedure bark_wai_fu (const emoji:  str = '<3');
+  procedure bark_wai_fu_nc_menu (const emoji:  str = '<3');
+  procedure bark_each_card_in_sak_dir_nc_menu ();
 
 implementation
 
 procedure pray_to_mata (by:  user_t);
 begin
-
+  // put architectural stuff here, so print stuff from memory that
+  // are critical to the current project etc.
 end;
 
 procedure pray_for_info (p:  proj_e);
@@ -84,13 +86,13 @@ begin
   // * The Cloister:
   // * Pattern:  order & chaos to work both those hemispheres
   // - convert to my ways, if you want
-  // ex:
+  // e.g.
   // a jedi is nearing you
   //
   // * The Catacombs:
   // place your todo list in some file and work your magic on it here
   // - get a random thing to work on
-  // ex:
+  // e.g.
   // a sith lurks nearby
 end;
 
@@ -117,7 +119,7 @@ begin
   // behooves you
 end;
 
-procedure bark_wai_fu (const emoji:  str = '<3');
+procedure bark_wai_fu_nc_menu (const emoji:  str = '<3');
 { Wrap her in a gift box }
 begin
   // Wai-fu (lore url):  en.wikipedia.org/wiki/Konami_Wai_Wai_World
@@ -146,6 +148,21 @@ begin
 
   arg.id:=emoji;
   args_pop_e (g_vars, arg);
+end;
+
+procedure bark_each_card_in_sak_dir_nc_menu ();
+var
+  i:  int;
+begin
+  args_init (g_vars);
+
+  if bark_proj.ncard > 0 then
+    g_vars[0].id:=bark_proj.lcard[0].tit;
+
+  for i:=1 to bark_proj.ncard - 1 do begin
+    arg.id:=bark_proj.lcard[i].tit;
+    args_pop_e (g_vars, arg);
+  end;
 end;
 
 end.

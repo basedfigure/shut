@@ -5,10 +5,10 @@ unit apputil;
 interface
 
 uses
-  Classes, SysUtils, process, ExtCtrls,
+  Classes, SysUtils, process,
   ncurses,
   // Juju:
-  typutil, ncutil, barkutil;
+  typutil, ncutil, barkutil, barkuser;
 
 const
   UTIL_PATH_R = '../';
@@ -16,11 +16,14 @@ const
   USER_NAME_DE  = 'Shaman';
   TERM_NAME_DE  = 'Hex';
 
+type
+  cli_mode = (nc_list, nc_read);
+
 
 
   { Proc }
   procedure run_cli (e: env_t;  const args: array of const);
-  procedure run_cli_nc (const args:  arg_a);
+  procedure run_cli_in_mode_nc (mode:  cli_mode;  idx:  int);
   procedure exec_app (const path: str);
   { Func }
   function ask_user_to_confirm (const q: str): bool;
@@ -30,7 +33,7 @@ var
   g_env:  env_t;
   g_view:  virt_view_t;
   // ..instances
-  g_time:  TTimer;
+  //g_time:  TTimer;
 
 implementation
 
@@ -44,10 +47,11 @@ procedure run_cli (e: env_t;  const args: array of const);
 { du:  magic recipes, pool resources, tissues }
 var
   cmd, user, term: str;
-  i,  nc_on_ln: int;
-  found: bool;
-  ch:  smallint;
+  i,  nc_on_ln, ch: int;
+  do_run_cli, found: bool;
 begin
+  do_run_cli:=true;
+
   user:=e.user_id;
   term:=e.term_id;
 
@@ -55,67 +59,95 @@ begin
   init_nc;
 
   // du:  num keys to jump to any arg, but vi keys are the norm, so not always
-  while true do begin
-   if nc_on_ln < 0 then
-     nc_on_ln:=0
-   else if nc_on_ln > High (g_vars) then nc_on_ln:=High (g_vars);
+  while do_run_cli do begin
+    if nc_on_ln < 0 then
+      nc_on_ln:=0
 
-   draw_nc ('', g_vars, nc_on_ln);
-   ch:=getch;
+    else if nc_on_ln > High (g_vars) then
+      nc_on_ln:=High (g_vars);
 
-   case ch of
-    //  note:  how the 'j' key has a tactile bump on it - you don't have to look
-    KEY_DOWN, Ord ('j'):  if nc_on_ln < High (g_vars) then Inc (nc_on_ln);
+    draw_nc ('', g_vars, nc_on_ln);
+    ch:=getch;
 
+    case ch of
+      KEY_DOWN, Ord ('j'):
+        if nc_on_ln < High (g_vars) then Inc (nc_on_ln);
 
-    KEY_UP, Ord ('k'):  if nc_on_ln > 0 then Dec (nc_on_ln);
+      KEY_UP, Ord ('k'):
+        if nc_on_ln > 0 then Dec (nc_on_ln);
 
-    10, 13:  // enter key
-    begin
+      10, 13:
+      begin
+        if (nc_on_ln >= 0) and (nc_on_ln <= High (g_vars)) then begin
+          run_cli_in_mode_nc (nc_read, nc_on_ln);
 
-     if (nc_on_ln >= 0) and (nc_on_ln <= High (g_vars)) then begin
+          i:=0;
 
-       // tui:  command line box at the top of the console
-       //
-       // opt 1:  tree of barks/bark_wai_fu
-       // opt 2:  git workspace
+          repeat
+            // double tap esc for instant return
+            draw_nc ('[Esc] to go back', g_vars, i,
+              bark_proj.lcard[nc_on_ln].tit);
 
-     end;
+            ch:=getch;
+
+            case ch of
+              KEY_DOWN, Ord ('j'):
+                if i < High (g_vars) then Inc (i);
+
+              KEY_UP, Ord ('k'):
+                if i > 0 then Dec (i);
+            end;
+
+          until ch = 27;
+
+          bark_each_card_in_sak_dir_nc_menu ();
+        end;
+      end;
 
     end;
-   end;
 
-   //Write (user + '@' + term + '> ');
-   //ReadLn (cmd);
-   //cmd:=LowerCase (Trim (cmd));
-   //
-   //found:=false;
-
-   //for i:=0 to High (args) div 2 do begin
-   // if (args[i*2].VType = vtPointer) and
-   //    (args[i*2+1].VType = vtAnsiString) and
-   //    (cmd = trunc_bin (str (args[i*2+1].VAnsiString))) then
-   // begin
-   //   proc_str_t (args[i*2].VPointer)
-   //    (str (args[i*2+1].VAnsiString));
-   //
-   //   found:=true;
-   //   Break;
-   // end;
-   //end;
-
-    if not found then WriteLn ('Unknown command.');
+    //if not found then WriteLn('Unknown command.');
 
   end;
 
 end;
 
-procedure run_cli_nc (const args:  arg_a);
+procedure run_cli_in_mode_nc (mode: cli_mode; idx: int);
+var
+  d: str;
+  i, ln_zero, ln_end: Integer;
+  ln: str;
 begin
-  // move run_cli nc here
-  // - g_vars for globs
-  // - args
-  // run_cli - commented out code
+  case mode of
+
+    nc_read:
+    begin
+      args_init (g_vars);
+
+      g_vars[0].id:='';
+      d:=bark_proj.lcard[idx].blk;
+
+      i:=0;
+      while i <= Length (d) do begin
+        ln_zero:=i + 1;
+
+        while (i < Length (d)) and (d[i+1] <> #10) do Inc (i);
+
+        ln_end:=i;
+
+        ln:=Copy (d, ln_zero, ln_end - ln_zero + 1);
+
+        arg.id:=ln;
+        args_pop_e (g_vars, arg);
+
+        Inc (i);
+      end;
+
+      // double tap esc for instant return
+      draw_nc ('[Esc] to go back', g_vars, 0);
+    end;
+
+  end;
 end;
 
 procedure exec_app (const path: str);

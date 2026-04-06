@@ -264,7 +264,7 @@ const
 
     root:  message (bark),  dialogue (tree),  container (cont)
     mem:   memory arena (mem),
-    run:   instance (ego),  triggers (trig),  projectiles (ammo), effects (fx)
+    runt:  instance (ego),  triggers (trig),  projectiles (ammo), effects (fx)
 
     kit:   keyboard (keeb),  game (pad),  joystick (joy)
     bass:  OpenAL (al),  Vorbis (ogg),  Waveform (wav)
@@ -276,7 +276,7 @@ const
     sim:   geo (hit), bodies (mass), convex (hull), space (grav), cloth (garb)
     area:  exterior (zone),  indoors (door)
     navi:  fog of war (fog),  culling (cull),  line of sight (los)
-    ai:    brain/behavior (psy),  pathfinding (path)
+    bot:    brain/behavior (psy),  pathfinding (path)
     ;;
 
     ; code:  by part
