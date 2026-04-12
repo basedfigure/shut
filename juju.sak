@@ -1,0 +1,39 @@
+JUJU:
+
+
+
+; Philosophy:
+Hex console utility:  hex
+It's a customized experience that is meant for production quality workflows, but
+also for educating on the importance of maintaining console workflows in average
+day to day computing lives.
+
+; Why use Hex, instead of just Bash and Shell?
+Well, you can screw up more easily in a typical console and Hex is just a more c
+ustomized console utility workspace, meant to work with Shell and by editing Hex
+'s Pascal sources.
+
+It's as much of a mental model for you to latch onto, as it is about the tooling
+itself.
+
+Custom solutions that have been studied and emerge naturally, are usually better
+than what you get marketed, on most of the internet, so my millionaire wife pays
+me, to maintain The Juju ecosystem, so that i can keep balling like this. I also
+support a lot of other work, through it. I only enjoy life, through the finest o
+f interfaces, that work. For some those are other people's faces, for some, they
+are console applications, that console them deep into the night, when nothing el
+se outside goes according to plan and when people gravitate towards the void, by
+staring into the gaping abyss that is their future, not formative of our present
+worries, in the slightest.
+
+
+Life's works,
+The First Philosophers
+;;
+
+
+
+; Install - Debian Linux - Apt packages:
+hex:  
+1)  libncurses-dev - or you get a linking error when compiling.
+;;
