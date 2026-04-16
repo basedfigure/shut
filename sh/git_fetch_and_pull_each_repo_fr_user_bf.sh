@@ -35,6 +35,7 @@ declare -A REPOS=(
   [save]="github.com/basedfigure/save"
   [gut]="github.com/basedfigure/gut"
   [jakd]="codeberg.org/basedfigure/jakd"
+  [naga]="codeberg.org/basedfigure/naga"
 )
 
 norm_git_url () {
