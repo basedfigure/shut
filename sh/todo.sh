@@ -74,6 +74,8 @@
 
 ROOT_DIR="/mnt/dump_dsk/CENTR/WRK/_lan/DESK/do/"
 TODO_DIR="$ROOT_DIR/stat" # Konsole based entries go here
+TODO_DIR_FOR_IN_PROG="$ROOT_DIR/_in_prog"
+TODO_DIR_FOR_DONE="$ROOT_DIR/_done"
 
 declare -A TODO_DIRS=(
   [hat]="$ROOT_DIR/hat"
@@ -232,7 +234,8 @@ FILTERED=$(awk -v words="${SEARCH_WORDS[*]}" '
 
 
 
-# * Dump of empty/nonempty files:
+# Barf empty files (note empty lines and whitespaces)
+
 elif [ "$1" = "-l" ]; then
   MODE="$2"
 
@@ -258,6 +261,51 @@ elif [ "$1" = "-l" ]; then
     fi
 
   done
+
+
+
+# Move file from TODO_DIRS to _in_prog                                       -do
+
+elif [ "$1" = "-do" ]; then
+  FILE_NAME="$2"
+
+  if [ -z "$FILE_NAME" ]; then
+    echo "Input file name"
+    exit 1
+  fi
+
+  # Prevent moving file if _in_prog dir is not empty
+  if [ "$(ls -A "$TODO_DIR_FOR_IN_PROG" 2>/dev/null)" ]; then
+    echo "Error:  to-do in progress, use -done first."
+    exit 1
+  fi
+
+  FOUND=""
+
+  for DIR in "${TODO_DIRS[@]}"; do
+    if [ -f "$DIR/$FILE_NAME" ]; then
+      FOUND="$DIR/$FILE_NAME"
+      break
+    fi
+  done
+
+  if [ -z "$FOUND" ]; then
+    echo "File not located in TODO_DIRS:  $FILE_NAME"
+    exit 1
+  fi
+
+  mv "$FOUND" "$TODO_DIR_FOR_IN_PROG/"
+  echo "Moved:  $(basename "$FOUND") -> $TODO_DIR_FOR_IN_PROG/"
+
+
+# Move _in_prog contents to _done                                          -done
+
+elif [ "$1" = "-done" ]; then
+  mv "$TODO_DIR_FOR_IN_PROG"/* "$TODO_DIR_FOR_DONE/" 2>/dev/null
+
+  echo "Moved all in_progress -> done"
+
+
 
 else
   cd "$TODO_DIR" || exit 1
